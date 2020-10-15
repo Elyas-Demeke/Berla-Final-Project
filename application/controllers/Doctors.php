@@ -36,7 +36,7 @@ class Doctors extends Admin_controller
     {
         if($id) {
             if($this->input->post('confirm')) {
-                    $delete = $this->model_users->delete($id);
+                    $delete = $this->Model_doctor->delete($id);
                     if($delete == true) {
                         $this->session->set_flashdata('success', 'Successfully removed');
                         redirect('Doctors/', 'refresh');

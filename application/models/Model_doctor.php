@@ -22,7 +22,7 @@ class Model_doctor extends CI_Model
 	}
 	public function delete($id)
 	{
-		$sql = "SELECT employees.accountid  from employees where e.id = ?";
+		$sql = "SELECT e.accountid  from employees as e where e.id = ?";
 		$query = $this->db->query($sql, array($id));
 		$row = $query->row_array();
 		$this->db->where('id', $id);

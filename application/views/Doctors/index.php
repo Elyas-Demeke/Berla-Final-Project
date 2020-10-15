@@ -74,8 +74,8 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Remove User </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
 
@@ -83,13 +83,14 @@
                   <p>Do you really want to remove?</p>
               </div>
               <div class="modal-footer">
-               <form id="removeForm" action=" <?php echo base_url('Doctors/delete/') ?>" method="post">
-                <input type="submit" class="btn btn-danger" name="confirm" value="Remove">
-                <a href="#" class="btn btn-default">Cancel</a>
+               <form id="removeForm" method="post">
+                <input type="submit" class="btn btn-danger" name="confirm" value="Remove"><span>    </span>
+                <!-- <a href="doctors" class="btn btn-default">Cancel</a> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
             </form>
         </div>
 
-
+<!-- action=" <?php echo base_url('Doctors/delete/') ?>"  -->
 
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -98,7 +99,7 @@
     function removeFunc(id)
     {
         console.log(id);
-        document.getElementById('removeForm').action = <?php echo base_url('Doctors/delete/')?> + id;
+        document.getElementById('removeForm').action = "Doctors/delete/" + id ;
         console.log(document.getElementById('removeForm').action);
     }
     $(document).ready(function() {
