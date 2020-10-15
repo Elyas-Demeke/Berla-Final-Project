@@ -105,7 +105,7 @@ class Doctors extends Admin_controller
             $account = array(
                 'phone' => $this->input->post('phone'),
                 'password' => $password,
-                'roleId' => 2,
+                'roleId' => 1,
             );
         	$data = array(
         		'fname' => $this->input->post('fname'),

@@ -39,7 +39,7 @@ class Model_doctor extends CI_Model
 			return $query->row_array();
 		}
 
-		$sql = "SELECT e.id as empid, a.roleId, e.fname, e.mname, e.lname, e.dob, e.sex, e.phone, e.officeno, e.email, e.photo, e.ward_id, w.name as wardname  FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND a.roleId = 2";
+		$sql = "SELECT e.id as empid, a.roleId, e.fname, e.mname, e.lname, e.dob, e.sex, e.phone, e.officeno, e.email, e.photo, e.ward_id, w.name as wardname  FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND a.roleId = 1";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
