@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label>Date of Birth</label>
                                 <div class="cal-icon">
-                                    <input type="date" class="form-control " name="dob" required value="<?php set_value('dob');?>">
+                                    <input type="date" class="form-control datetimepicker" name="dob" required value="<?php set_value('dob');?>">
                                 </div>
                             </div>
                         </div>

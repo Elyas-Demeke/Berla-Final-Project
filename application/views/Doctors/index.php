@@ -25,7 +25,7 @@
                             <?php if($user_data): ?>
                                 <?php foreach ($user_data as $k => $v): ?>
                                     <tr>
-                                        <td><img alt="" class="avatar" src="<?php echo $v['user_info']['photo']?>"></td>
+                                        <td><img alt="" class="avatar" src="<?php echo base_url($v['user_info']['photo'])?>"></td>
                                         <td><?php echo $v['user_info']['fname'].' '.$v['user_info']['mname'].' '. $v['user_info']['lname'] ?></td>
                                         <td><?php 
                                         if($v['user_info']['sex'] == 1)

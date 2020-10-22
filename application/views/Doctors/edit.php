@@ -1,149 +1,180 @@
-<style> 
-.form-group.required .control-label:after{
-	content: " * ";
-	color: red;
-}
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h4 class="page-title">Edit Doctor Profile</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                      <?php if($this->session->flashdata('success')): ?>
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <?php echo $this->session->flashdata('success'); ?>
+                      </div>
+                      <?php elseif($this->session->flashdata('errors')): ?>
+                        <div class="alert alert-error alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <?php echo $this->session->flashdata('errors'); ?>
+                      </div>
+                      
+                      <?php else: ?>
+                          <?php if(validation_errors()): ?>
+                            <div class="alert alert-error alert-dismissible" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <?php echo validation_errors(); ?>
 
-</style>
+                          </div>
+                      <?php endif; ?>
+                  <?php endif; ?>
 
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Manage
-        <small>Users</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Users</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <div class="col-md-6 col-xs-12 col-md-offset-2">
-          
-          <?php if($this->session->flashdata('success')): ?>
-            <div class="alert alert-success alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('success'); ?>
+                  <form role="form" method="post" enctype="multipart/form-data" accept-charset="utf-8" action="<?php echo base_url('Doctors/edit/'.$doctor_data['empid'])?>">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>First Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" id="fname" name="fname" required value="<?php echo $doctor_data['fname']?>">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Middle Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" name="mname" required value="<?php echo $doctor_data['mname']?>">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input class="form-control" type="text" name="lname" required value="<?php echo $doctor_data['lname']?>">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email <span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" name="email" required value="<?php echo $doctor_data['email']?>">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input class="form-control" type="password" name="password"  value="<?php set_value('password');?>">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input class="form-control" type="password" name="cpassword"  value="<?php set_value('cpassword');?>">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <div class="cal-icon">
+                                    <input type="date" class="form-control " name="dob" required value="<?php echo $doctor_data['dob']?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <div class="form-group gender-select">
+                              <label class="gen-label">Gender:</label>
+                              <div class="form-check-inline">
+                                 <label class="form-check-label">
+                                    <input type="radio" name="gender[]" class="form-check-input " value="1"<?php 
+                                    if( $doctor_data['sex'] == 1):
+                                      echo "checked";
+                                    endif;
+                                    ?>>Male
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                             <label class="form-check-label">
+                                <input type="radio" name="gender[]" class="form-check-input" value="2"<?php 
+                                if($doctor_data['sex'] == 2):
+                                  echo "checked";
+                                endif;
+                                ?>>Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                   <div class="row">
+                      <div class="col-sm-6">
+                         <div class="form-group">
+                            <label >Office Number</label>
+                            <input type="text" class="form-control" name="office_number" required value="<?php echo $doctor_data['officeno']?>">
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input class="form-control" type="text" name="phone" required value="<?php echo $doctor_data['phone']?>">
+                        </div>
+                    </div>
+                </div>
             </div>
-          <?php elseif($this->session->flashdata('error')): ?>
-            <div class="alert alert-error alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <?php echo $this->session->flashdata('error'); ?>
+            <div class="col-sm-6 col-md-6 col-lg-3">
+                <div class="form-group">
+                    <label>Ward</label>
+                    <select name="ward" class="form-control select">
+                        <option > Select </option>
+                        <option value="1" <?php 
+                        if($doctor_data['ward_id'] == 1)
+                          echo "selected";
+                         ?>>Gynecology</option>
+                        <option value="2"<?php 
+                        if($doctor_data['ward_id'] == 2)
+                          echo "selected";
+                         ?>>Pediatrics</option>
+                    </select>
+                </div>
             </div>
-          <?php endif; ?>
-
-          <div class="box" >
-            <div class="box-header">
-              <h3 class="box-title">Edit User</h3>
+            <div class="col-sm-6">
+               <div class="form-group">
+                  <label>Avatar</label>
+                  <div class="profile-upload">
+                     <div class="upload-img">
+                        <img alt="profile picture" src="<?php echo base_url($doctor_data['photo'])?>">
+                    </div>
+                    <div class="upload-input">
+                        <input type="file" name="photo" class="form-control" id="photo"  >
+                    </div>
+                </div>
             </div>
-            <form role="form" action="<?php base_url('users/create') ?>" method="post">
-              <div class="box-body">
-
-                <?php echo validation_errors(); ?>
-
-                <div class="form-group required">
-                  <label for="groups" class="control-label" >Groups</label>
-                  <select class="form-control" id="groups" name="groups" required>
-                    <option value="">Select Groups</option>
-                    <?php foreach ($group_data as $k => $v): ?>
-                      <option value="<?php echo $v['id'] ?>" <?php if($user_group['id'] == $v['id']) { echo 'selected'; } ?> ><?php echo $v['group_name'] ?></option> 
-                    <?php endforeach ?>
-                  </select>
-                </div>
-
-                <div class="form-group required">
-                  <label for="username" class="control-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="<?php echo $user_data['username'] ?>" autocomplete="off" required>
-                </div>
-
-                <div class="form-group required">
-                  <label for="email" class="control-label">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $user_data['email'] ?>" autocomplete="off" required>
-                </div>                
-
-                <div class="form-group required">
-                  <label for="fname" class="control-label">First name</label>
-                  <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" value="<?php echo $user_data['firstname'] ?>" autocomplete="off" required>
-                </div>
-
-                <div class="form-group">
-                  <label for="lname">Last name</label>
-                  <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" value="<?php echo $user_data['lastname'] ?>" autocomplete="off">
-                </div>
-
-                <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="<?php echo $user_data['phone'] ?>" autocomplete="off">
-                </div>
-
-                <div class="form-group">
-                  <label for="gender">Gender</label>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="gender" id="male" value="1" <?php if($user_data['gender'] == 1) {
-                        echo "checked";
-                      } ?>>
-                      Male
-                    </label>
-                    <label>
-                      <input type="radio" name="gender" id="female" value="2" <?php if($user_data['gender'] == 2) {
-                        echo "checked";
-                      } ?>>
-                      Female
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <div class="alert alert-info alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      Leave the password field empty if you don't want to change.
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" name="password" placeholder="Password"  autocomplete="off">
-                </div>
-
-                <div class="form-group">
-                  <label for="cpassword">Confirm password</label>
-                  <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" autocomplete="off">
-                </div>
-
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="<?php echo base_url('users/') ?>" class="btn btn-warning">Back</a>
-              </div>
-            </form>
-          </div>
-          <!-- /.box -->
         </div>
-        <!-- col-md-12 -->
-      </div>
-      <!-- /.row -->
-      
-
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-
+    </div>
+    
+    <div class="form-group">
+        <label class="display-block">Status</label>
+        <div class="form-check form-check-inline">
+           <input class="form-check-input" type="radio" name="status" id="doctor_active" value="1" <?php 
+            if($doctor_data['active']==1)
+              echo "checked";
+            ?>>
+           <label class="form-check-label" for="doctor_active">
+               Active
+           </label>
+       </div>
+       <div class="form-check form-check-inline">
+           <input class="form-check-input" type="radio" name="status" id="doctor_inactive" value="2"<?php 
+           if($doctor_data['active']==0)
+            echo "checked";
+            ?>>
+           <label class="form-check-label" for="doctor_inactive">
+               Inactive
+           </label>
+       </div>
+   </div>
+   <div class="m-t-20 text-center">
+    <button type="submit" class="btn btn-primary submit-btn">Create Doctor</button>
+</div>
+</form>
+</div>
+</div>
+</div>
 <script type="text/javascript">
-  $(document).ready(function() {
-    $("#groups").select2();
-
-    $("#mainUserNav").addClass('active');
-    $("#manageUserNav").addClass('active');
-  });
-</script>
+    $(document).ready(function() {
+     $("#Doctors").addClass('active');
+ }); 
+</script>          
