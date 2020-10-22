@@ -144,8 +144,8 @@ class Doctors extends Admin_controller
                 $this->form_validation->set_rules('mname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('lname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('email', 'Email', 'trim|required');
-                $this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]');
-                $this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|matches[password]');
+                // $this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]');
+                // $this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|matches[password]');
                 $this->form_validation->set_rules('dob', 'DOB', 'trim|required');
                 //$this->form_validation->set_rules('gender[]', 'Gender', 'trim|required');
                 $this->form_validation->set_rules('office_number', 'Office Number', 'required');
@@ -165,33 +165,33 @@ class Doctors extends Admin_controller
                     if($this->upload->do_upload('photo'))
                     {
                      //$data = $this->input->post();
-                     $info = $this->upload->data();
-                     $image_path = "uploads/".$info['raw_name'].$info['file_ext'];
-                     $image = $image_path;
+                         $info = $this->upload->data();
+                         $image_path = "uploads/".$info['raw_name'].$info['file_ext'];
+                         $image = $image_path;
 
-                    
-                    $data = array(
-                    'fname' => $this->input->post('fname'),
-                    'mname' => $this->input->post('mname'),
-                    'lname' => $this->input->post('lname'),
-                    'dob' => $this->input->post('dob'),
-                    'sex' => $this->input->post('gender[0]'),
-                    'phone' => $this->input->post('phone'),
-                    'officeno' => $this->input->post('office_number'),
-                    'email' => $this->input->post('email'),
-                    'ward_id' => $this->input->post('ward'),
-                    'photo' => $image,
-                    );
-                 }
+                        $accountdata = array('active' => $this->input->post('status[0]'));
+                        $data = array(
+                        'fname' => $this->input->post('fname'),
+                        'mname' => $this->input->post('mname'),
+                        'lname' => $this->input->post('lname'),
+                        'dob' => $this->input->post('dob'),
+                        'sex' => $this->input->post('gender[0]'),
+                        'phone' => $this->input->post('phone'),
+                        'officeno' => $this->input->post('office_number'),
+                        'email' => $this->input->post('email'),
+                        'ward_id' => $this->input->post('ward'),
+                        'photo' => $image,
+                        );
+                     }
                //unset($data['submit']);
-                 else
-                 {
-                    $this->session->set_flashdata('errors', 'file found butupload failed');            
+                     else{
+                        $this->session->set_flashdata('errors', 'file found butupload failed');            
+                    }
                 }
-            }
             else{
                 $this->session->set_flashdata('errors', 'no file found');
                 // no file case
+                    $accountdata = array('active' => $this->input->post('status[0]'));
                     $data = array(
                     'fname' => $this->input->post('fname'),
                     'mname' => $this->input->post('mname'),
@@ -205,13 +205,13 @@ class Doctors extends Admin_controller
                     );
             }
                     
-                    $update = $this->Model_doctor->edit($data,$id);
+                    $update = $this->Model_doctor->edit($data,$id,$accountdata);
                     if($update == true) {
                             $this->session->set_flashdata('success', 'Successfully updated');
                             redirect('Doctors/', 'refresh');
                         }
                         else {
-                            $this->session->set_flashdata('errors', 'Error occurred!!');
+                            $this->session->set_flashdata('errors', $update);
                             redirect('Doctors/edit/'.$id, 'refresh');
                         }
 

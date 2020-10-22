@@ -1,5 +1,5 @@
-<body>
-    <div class="main-wrapper">
+<body style="width:100%;">
+    <div class="main-wrapper" >
         <div class="header">
 			<div class="header-left">
 				<a href="index-2.html" class="logo">
@@ -88,10 +88,14 @@
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                         <span class="user-img">
-							<img class="rounded-circle" src="<?php echo base_url('assets/img/user.jpg')?>" width="24" alt="Admin">
+							<img class="rounded-circle" src="<?php echo base_url($this->session->userdata('photo'))?>" width="36" alt="Admin">
 							<span class="status online"></span>
 						</span>
-						<span>Admin</span>
+						<span><?php 
+
+                        $fname = $this->session->userdata('fname');
+                        $mname = $this->session->userdata('mname');
+                        echo $fname. " " . $mname; ?></span>
                     </a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="profile.html">My Profile</a>

@@ -54,7 +54,7 @@
                                 <input class="form-control" type="email" name="email" required value="<?php echo $doctor_data['email']?>">
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <!-- <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password</label>
                                 <input class="form-control" type="password" name="password"  value="<?php set_value('password');?>">
@@ -65,7 +65,7 @@
                                 <label>Confirm Password</label>
                                 <input class="form-control" type="password" name="cpassword"  value="<?php set_value('cpassword');?>">
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Date of Birth</label>
@@ -148,7 +148,7 @@
     <div class="form-group">
         <label class="display-block">Status</label>
         <div class="form-check form-check-inline">
-           <input class="form-check-input" type="radio" name="status" id="doctor_active" value="1" <?php 
+           <input class="form-check-input" type="radio" name="status[]" id="doctor_active" value="1" <?php 
             if($doctor_data['active']==1)
               echo "checked";
             ?>>
@@ -157,7 +157,7 @@
            </label>
        </div>
        <div class="form-check form-check-inline">
-           <input class="form-check-input" type="radio" name="status" id="doctor_inactive" value="2"<?php 
+           <input class="form-check-input" type="radio" name="status[]" id="doctor_inactive" value="0"<?php 
            if($doctor_data['active']==0)
             echo "checked";
             ?>>
@@ -167,7 +167,7 @@
        </div>
    </div>
    <div class="m-t-20 text-center">
-    <button type="submit" class="btn btn-primary submit-btn">Create Doctor</button>
+    <button type="submit" class="btn btn-primary submit-btn">Update Doctor Information</button><p></p> <a href="<?php echo base_url('Doctors')?>" class="btn btn-danger submit-btn">Back</a>
 </div>
 </form>
 </div>

@@ -43,18 +43,22 @@ class Model_doctor extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
-	public function edit($data = array(), $id = null, $account_id = null)
+	public function edit($data = array(), $id = null, $account_data = null)
 	{
 		$this->db->where('id', $id);
 		$update = $this->db->update('employees', $data);
+		$sql = 'SELECT accountid FROM employees WHERE id = ?';
+		$query = $this->db->query($sql,array($id));
+		$result = $query->row_array();
+		$account_id = $result['accountid'];
 
-		// if($account_id) {
+		if($account_id) {
 		// 	// user group
-		// 	$update_user_group = array('group_id' => $group_id);
-		// 	$this->db->where('user_id', $id);
-		// 	$user_group = $this->db->update('user_group', $update_user_group);
-		// 	return ($update == true && $user_group == true) ? true : false;	
-		// }
+			
+			$this->db->where('id', $account_id);
+			$doctor_account = $this->db->update('accounts', $account_data);
+			return ($update == true && $doctor_account == true) ? true : false;	
+		}
 			
 		return ($update == true) ? true : false;	
 	}

@@ -225,6 +225,8 @@
     <script src="<?php echo base_url('assets/js/dataTables.bootstrap4.min.js')?>"></script>
     <script src="<?php echo base_url('assets/js/jquery.fullcalendar.js')?>"></script>
     <script src="<?php echo base_url('assets/js/tagsinput.js')?>"></script>
-
+    <script type="text/javascript">
+        
+    </script>
 </body>
 </html>
