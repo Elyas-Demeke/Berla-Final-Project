@@ -33,44 +33,44 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" id="fname" name="fname" required value="<?php set_value('fname');?>">
+                                <input class="form-control" type="text" id="fname" name="fname" required value="<?php echo set_value('fname');?>">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Middle Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" name="mname" required value="<?php set_value('mname');?>">
+                                <input class="form-control" type="text" name="mname" required value="<?php echo set_value('mname');?>">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input class="form-control" type="text" name="lname" required value="<?php set_value('lname');?>">
+                                <input class="form-control" type="text" name="lname" required value="<?php echo set_value('lname');?>">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Email <span class="text-danger">*</span></label>
-                                <input class="form-control" type="email" name="email" required value="<?php set_value('email');?>">
+                                <input class="form-control" type="email" name="email" required value="<?php echo set_value('email');?>">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" type="password" name="password" required value="<?php set_value('password');?>">
+                                <input class="form-control" type="password" name="password" required value="<?php echo set_value('password');?>">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input class="form-control" type="password" name="cpassword" required value="<?php set_value('cpassword');?>">
+                                <input class="form-control" type="password" name="cpassword" required value="<?php echo set_value('cpassword');?>">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Date of Birth</label>
                                 <div class="cal-icon">
-                                    <input type="date" class="form-control " name="dob" required value="<?php set_value('dob');?>">
+                                    <input type="date" class="form-control " name="dob" required value="<?php echo set_value('dob');?>">
                                 </div>
                             </div>
                         </div>
@@ -94,14 +94,14 @@
                       <div class="col-sm-6">
                          <div class="form-group">
                             <label >Office Number</label>
-                            <input type="text" class="form-control" name="office_number" required value="<?php set_value('office_number');?>">
+                            <input type="text" class="form-control" name="office_number" required value="<?php echo set_value('office_number');?>">
                         </div>
                     </div>
                     
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input class="form-control" type="text" name="phone" required value="<?php set_value('phone');?>">
+                            <input class="form-control" type="text" name="phone" required value="<?php echo set_value('phone');?>">
                         </div>
                     </div>
                 </div>
@@ -121,10 +121,10 @@
                   <label>Avatar</label>
                   <div class="profile-upload">
                      <div class="upload-img">
-                        <img alt="" src="<?php echo base_url('assets/img/user.jpg')?>">
+                        <img name="avatar" alt="" src="<?php echo base_url('assets/img/user.jpg')?>">
                     </div>
                     <div class="upload-input">
-                        <input type="file" name="photo" class="form-control" id="photo" value="Save" value="<?php set_value('photo');?>">
+                        <input type="file" name="photo" class="form-control" id="photo" value="Save" value="<?php echo set_value('photo');?>">
                     </div>
                 </div>
             </div>
@@ -134,13 +134,13 @@
     <div class="form-group">
         <label class="display-block">Status</label>
         <div class="form-check form-check-inline">
-           <input class="form-check-input" type="radio" name="status" id="doctor_active" value="1" checked>
+           <input class="form-check-input" type="radio" name="status[]" id="doctor_active" value="1" checked>
            <label class="form-check-label" for="doctor_active">
                Active
            </label>
        </div>
        <div class="form-check form-check-inline">
-           <input class="form-check-input" type="radio" name="status" id="doctor_inactive" value="2">
+           <input class="form-check-input" type="radio" name="status[]" id="doctor_inactive" value="2">
            <label class="form-check-label" for="doctor_inactive">
                Inactive
            </label>

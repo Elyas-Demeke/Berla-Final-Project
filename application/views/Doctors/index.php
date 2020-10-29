@@ -38,9 +38,9 @@
                                         <td><?php echo $v['user_info']['phone'] ?></td>
                                         <td><?php echo $v['user_info']['email'] ?></td>
                                         <td><?php if($v['user_info']['active'] == 0): ?>
-                                            <img class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">
+                                            <img alt="0" class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">
                                             <?php elseif ($v['user_info']['active'] == 1):  ?>
-                                            <img class="rounded-circle" width="40" src="<?php echo base_url('assets/img/active sign transparent.png')?>">
+                                            <img alt="1" class="rounded-circle" width="40" src="<?php echo base_url('assets/img/active sign transparent.png')?>">
                                         <?php endif; ?>
                                         </td>
                                         <td>
