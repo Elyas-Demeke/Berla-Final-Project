@@ -4,12 +4,25 @@ class Patients extends Admin_controller{
 	public function __construct()
 	{
 		parent::__construct();
+        $this->load->model('Model_patient');
 		$this->not_logged_in();
 		$this->data['page_title'] = 'Patients';
 	}
 	public function index()
 	{
-		$this->render_template('Patients/index');
+        $Patient_data = $this->Model_patient->get_patient_data();
+        $result = array();
+        foreach ($Patient_data as $k => $v) {
+
+             $result[$k]['user_info'] = $v;
+             // echo "v is ".$v['username'];
+            // $role = $this->Model_doctor->getUserRole($v['empid']);
+            //  $result[$k]['user_role'] = $role;
+                // echo ' k is'.$k.'<br>';
+        }
+
+        $this->data['user_data'] = $result;
+		$this->render_template('Patients/index',$this->data);
 	}
 	public function add()
 	{
