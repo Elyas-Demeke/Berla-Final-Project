@@ -22,7 +22,7 @@ class Model_doctor extends CI_Model
 	}
 	public function delete($id)
 	{
-		$sql = "SELECT employees.accountid  from employees where e.id = ?";
+		$sql = "SELECT e.accountid  from employees as e where e.id = ?";
 		$query = $this->db->query($sql, array($id));
 		$row = $query->row_array();
 		$this->db->where('id', $id);
@@ -31,17 +31,36 @@ class Model_doctor extends CI_Model
 		$delete = $this->db->delete('accounts');
 		return ($delete == true) ? true : false;
 	}
-	public function getEmployeesData($userId = null)
+	public function get_doctor_data($id = null)
 	{
-		if($userId) {
-			$sql = "SELECT e.id as empid, a.roleId, e.fname, e.mname,e.lname, e.dob, e.sex, e.phone, e.officeno, e.email, e.photo, e.ward_id, w.name as wardname  FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND e.id = ?";
-			$query = $this->db->query($sql, array($userId));
+		if($id) {
+			$sql = "SELECT e.id as empid, a.roleId, e.fname, e.mname,e.lname, e.dob, e.sex, e.phone, e.officeno, e.email, e.photo, e.ward_id, w.name as wardname, a.active  FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND e.id = ? AND a.roleId = 2";
+			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
 
-		$sql = "SELECT e.id as empid, a.roleId, e.fname, e.mname, e.lname, e.dob, e.sex, e.phone, e.officeno, e.email, e.photo, e.ward_id, w.name as wardname  FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND a.roleId = 2";
+		$sql = "SELECT e.id as empid, a.roleId, e.fname, e.mname, e.lname, e.dob, e.sex, e.phone, e.officeno, e.email, e.photo, e.ward_id, w.name as wardname, a.active FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND a.roleId = 2";
 		$query = $this->db->query($sql);
 		return $query->result_array();
+	}
+	public function edit($data = array(), $id = null, $account_data = null)
+	{
+		$this->db->where('id', $id);
+		$update = $this->db->update('employees', $data);
+		$sql = 'SELECT accountid FROM employees WHERE id = ?';
+		$query = $this->db->query($sql,array($id));
+		$result = $query->row_array();
+		$account_id = $result['accountid'];
+
+		if($account_id) {
+		// 	// user group
+			
+			$this->db->where('id', $account_id);
+			$doctor_account = $this->db->update('accounts', $account_data);
+			return ($update == true && $doctor_account == true) ? true : false;	
+		}
+			
+		return ($update == true) ? true : false;	
 	}
 	public function getUserRole($userId = null)
 	{

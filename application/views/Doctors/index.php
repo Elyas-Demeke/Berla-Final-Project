@@ -18,6 +18,7 @@
                                 <th>Date of birth</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -25,7 +26,7 @@
                             <?php if($user_data): ?>
                                 <?php foreach ($user_data as $k => $v): ?>
                                     <tr>
-                                        <td><img alt="" class="avatar" src="<?php echo $v['user_info']['photo']?>"></td>
+                                        <td><img alt="" class="avatar" src="<?php echo base_url($v['user_info']['photo'])?>"></td>
                                         <td><?php echo $v['user_info']['fname'].' '.$v['user_info']['mname'].' '. $v['user_info']['lname'] ?></td>
                                         <td><?php 
                                         if($v['user_info']['sex'] == 1)
@@ -36,6 +37,12 @@
                                         <td><?php echo $v['user_info']['dob'] ?></td>
                                         <td><?php echo $v['user_info']['phone'] ?></td>
                                         <td><?php echo $v['user_info']['email'] ?></td>
+                                        <td><?php if($v['user_info']['active'] == 0): ?>
+                                            <img alt="0" class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">
+                                            <?php elseif ($v['user_info']['active'] == 1):  ?>
+                                            <img alt="1" class="rounded-circle" width="40" src="<?php echo base_url('assets/img/active sign transparent.png')?>">
+                                        <?php endif; ?>
+                                        </td>
                                         <td>
                                             <a href="<?php echo base_url('Doctors/edit/'.$v['user_info']['empid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['user_info']['empid']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
@@ -74,8 +81,8 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Remove User </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
 
 
@@ -83,13 +90,14 @@
                   <p>Do you really want to remove?</p>
               </div>
               <div class="modal-footer">
-               <form id="removeForm" action=" <?php echo base_url('Doctors/delete/') ?>" method="post">
-                <input type="submit" class="btn btn-danger" name="confirm" value="Remove">
-                <a href="#" class="btn btn-default">Cancel</a>
+               <form id="removeForm" method="post">
+                <input type="submit" class="btn btn-danger" name="confirm" value="Remove"><span>    </span>
+                <!-- <a href="doctors" class="btn btn-default">Cancel</a> -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
             </form>
         </div>
 
-
+<!-- action=" <?php echo base_url('Doctors/delete/') ?>"  -->
 
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -98,11 +106,12 @@
     function removeFunc(id)
     {
         console.log(id);
-        document.getElementById('removeForm').action = <?php echo base_url('Doctors/delete/')?> + id;
+        document.getElementById('removeForm').action = "Doctors/delete/" + id ;
         console.log(document.getElementById('removeForm').action);
     }
     $(document).ready(function() {
-       $("#Doctors").addClass('active');
+        $('#doctorTable').DataTable('');
+        $("#Doctors").addClass('active');
    }); 
 
 </script>

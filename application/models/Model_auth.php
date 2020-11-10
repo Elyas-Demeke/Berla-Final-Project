@@ -44,7 +44,7 @@ class Model_auth extends CI_Model
 	}
 	public function login($phone, $password) {
 		if($phone && $password) {
-			$sql = "SELECT a.id as accid,a.roleid,a.password, e.dob, e.email, e.fname,e.id, e.lname,e.mname,e.officeno,e.phone, e.sex,e.ward_id FROM `accounts` as a, `employees` as e WHERE a.phone = ? AND a.id = e.accountid";
+			$sql = "SELECT a.id as accid,a.roleid,a.password, e.dob, e.email, e.fname,e.id, e.lname,e.mname,e.officeno,e.phone,e.photo, e.sex,e.ward_id FROM `accounts` as a, `employees` as e WHERE a.phone = ? AND a.id = e.accountid";
 			$query = $this->db->query($sql, array($phone));
 
 			if($query->num_rows() == 1) {

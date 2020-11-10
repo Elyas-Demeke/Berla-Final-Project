@@ -48,14 +48,14 @@ class Auth extends Admin_Controller
            			redirect('dashboard', 'refresh');
            		}
            		else {
-           			$this->session->set_flashdata('errors' , 'Email exists but password is incorrect');
+           			$this->session->set_flashdata('errors' , 'Phone exists but password is incorrect');
            			redirect('Auth/login', 'refresh');
            		}
            	}
            	else 
            	{
            		
-           		$this->session->set_flashdata('errors' , 'Email does not exist');
+           		$this->session->set_flashdata('errors' , 'Phone does not exist');
            		redirect('Auth/login', 'refresh');
 
            	}	
