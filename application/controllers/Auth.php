@@ -10,6 +10,7 @@ class Auth extends Admin_Controller
 		parent::__construct();
 
 		$this->load->model('model_auth');
+    
 	}
 
 	/* 
@@ -33,19 +34,16 @@ class Auth extends Admin_Controller
            		$login = $this->model_auth->login($this->input->post('phone'), $this->input->post('password'));
 
            		if($login) {
+      					if($login != -1){
+                  $login += array('logged_in'=>TRUE);
+        					$this->session->set_userdata($login);
 
-     //       			$logged_in_sess = array(
-     //       				'id' => $login['id'],
-				 //        'username'  => $login['username'],
-				 //        'email'     => $login['email'],
-				 //        'logged_in' => TRUE
-					// );
-
-					$login += array('logged_in'=>TRUE);
-
-					// $this->session->set_userdata($logged_in_sess);
-					$this->session->set_userdata($login);
-           			redirect('dashboard', 'refresh');
+             			redirect('dashboard', 'refresh');
+                }
+                else{
+                  $this->session->set_flashdata('errors' , 'Account is Deactivated');
+                  redirect('Auth/login', 'refresh');
+                }
            		}
            		else {
            			$this->session->set_flashdata('errors' , 'Phone exists but password is incorrect');
