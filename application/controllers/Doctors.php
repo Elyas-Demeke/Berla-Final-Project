@@ -4,8 +4,8 @@ class Doctors extends Admin_controller
 	public function __construct()
 	{
 		parent::__construct();
-        $this->load->model('Model_doctor');
 		$this->not_logged_in();
+        $this->load->model('Model_doctor');
 		$this->data['page_title'] = 'Doctors';
 	}
 
@@ -153,7 +153,7 @@ class Doctors extends Admin_controller
                 $this->form_validation->set_rules('ward', 'Ward', 'required');
                 $this->form_validation->set_rules('phone', 'Phone','trim|required|min_length[5]|max_length[12]');
             if($this->form_validation->run() == TRUE){// if we are trying to run edit after editing the form
-                if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))){
+                // if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))){
                     $image = '';
                 if(!empty($_FILES['photo']['name'])){
 
@@ -216,7 +216,7 @@ class Doctors extends Admin_controller
                             redirect('Doctors/edit/'.$id, 'refresh');
                         }
 
-                }
+                // }//
             }
             else{
 

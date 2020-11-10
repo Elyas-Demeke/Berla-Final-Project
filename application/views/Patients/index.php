@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <table id="doctorTable" class="table table-bordered table-striped">
+                    <table id="patientTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -17,6 +17,7 @@
                                 <th>Date of birth</th>
                                 <th>Phone</th>
                                 <th>Email</th>
+                                <th>Bed</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -36,14 +37,19 @@
                                         <td><?php echo $v['user_info']['phone'] ?></td>
                                         <td><?php echo $v['user_info']['email'] ?></td>
                                         <td><?php if($v['user_info']['in_patient'] == 0): ?>
-                                            <img class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">
+                                            <span>Out patient</span>
                                             <?php elseif ($v['user_info']['in_patient'] == 1):  ?>
+                                            <span>In patient</span>
+                                        <?php endif; ?>
+										<td><?php if($v['user_info']['active'] == 0): ?>
+                                            <img class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">
+                                            <?php elseif ($v['user_info']['active'] == 1):  ?>
                                             <img class="rounded-circle" width="40" src="<?php echo base_url('assets/img/active sign transparent.png')?>">
                                         <?php endif; ?>
                                         </td>
                                         <td>
-                                            <a href="<?php echo base_url('Patients/edit/'.$v['user_info']['empid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                            <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['user_info']['id']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
+                                            <a href="<?php echo base_url('Patients/edit/'.$v['user_info']['patid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                            <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['user_info']['patid']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     
@@ -104,12 +110,12 @@
     function removeFunc(id)
     {
         console.log(id);
-        document.getElementById('removeForm').action = "Doctors/delete/" + id ;
+        document.getElementById('removeForm').action = "delete/" + id ;
         console.log(document.getElementById('removeForm').action);
     }
     $(document).ready(function() {
-        $('#doctorTable').DataTable('');
-        $("#Doctors").addClass('active');
+        $('#patientTable').DataTable('');
+        $("#Patients").addClass('active');
    }); 
 
 </script>
