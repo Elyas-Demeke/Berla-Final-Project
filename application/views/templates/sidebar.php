@@ -40,23 +40,15 @@
 								<li><a href="<?php echo base_url('Dashboard')?>.html">Provident Fund</a></li>
 							</ul>
 						</li>
-						<li class="submenu">
-							<a href="#"><i class="fa fa-book"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li><a href="<?php echo base_url('Dashboard')?>"> Employee Salary </a></li>
-								<li><a href="<?php echo base_url('Dashboard')?>"> Payslip </a></li>
-							</ul>
+						<li id="groups">
+							<a href="<?php echo base_url('groups')?>"><i class="fa fa-book"></i> <span> Roles </span> </span></a>
+							
 						</li>
                         <li>
                             <a href="chat.html"><i class="fa fa-comments"></i> <span>Chat</span> <span class="badge badge-pill bg-primary float-right">5</span></a>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="fa fa-video-camera camera"></i> <span> Calls</span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li><a href="voice-call.html">Voice Call</a></li>
-                                <li><a href="video-call.html">Video Call</a></li>
-                                <li><a href="incoming-call.html">Incoming Call</a></li>
-                            </ul>
+                            <a href=""><i class="fa fa-video-camera camera"></i> <span> Calls</span> <span class="menu-arrow"></span></a>
                         </li>
                         <li class="submenu">
                             <a href="#"><i class="fa fa-envelope"></i> <span> Email</span> <span class="menu-arrow"></span></a>
