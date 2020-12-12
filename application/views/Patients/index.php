@@ -1,4 +1,4 @@
-         <div class="page-wrapper">
+        <div class="page-wrapper">
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
@@ -14,11 +14,12 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Sex</th>
-                                <th>Date of birth</th>
+                                <!-- <th>Date of birth</th> -->
                                 <th>Phone</th>
-                                <th>Email</th>
-                                <th>Bed</th>
+                               <!--  <th>Email</th> -->
                                 <th>Status</th>
+                                <th>Labratory test</th>
+                                <th>Appointment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -33,21 +34,30 @@
                                         else
                                             echo 'Female'; 
                                         ?></td>
-                                        <td><?php echo $v['user_info']['dob'] ?></td>
+                                        <!-- <td><?php// echo $v['user_info']['dob'] ?></td> -->
                                         <td><?php echo $v['user_info']['phone'] ?></td>
-                                        <td><?php echo $v['user_info']['email'] ?></td>
-                                        <td><?php if($v['user_info']['in_patient'] == 0): ?>
+                                      <!--   <td><?php echo $v['user_info']['email'] ?></td> -->
+                                        <!-- <td><?php if($v['user_info']['in_patient'] == 0): ?>
                                             <span>Out patient</span>
                                             <?php elseif ($v['user_info']['in_patient'] == 1):  ?>
                                             <span>In patient</span>
                                         <?php endif; ?>
-										<td><?php if($v['user_info']['active'] == 0): ?>
+                                        </td> -->
+										<td>
+                                            <?php if($v['user_info']['active'] == 0): ?>
                                             <img class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">
                                             <?php elseif ($v['user_info']['active'] == 1):  ?>
                                             <img class="rounded-circle" width="40" src="<?php echo base_url('assets/img/active sign transparent.png')?>">
                                         <?php endif; ?>
                                         </td>
                                         <td>
+                                            <a href="<?php echo base_url('Laboratories/order/'.$v['user_info']['patid']) ?>" class="btn btn-default"><i class=" fa fa-hospital-o"></i> Order</a>
+                                        </td>
+                                        <td>
+                                            <a href="<?php echo base_url('Appointments/make/'.$v['user_info']['patid']) ?>" class="btn btn-default"><i class="fa fa-calendar-times-o"></i> Make</a>
+                                        </td>
+                                        <td>
+                                            
                                             <a href="<?php echo base_url('Patients/edit/'.$v['user_info']['patid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['user_info']['patid']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
                                         </td>

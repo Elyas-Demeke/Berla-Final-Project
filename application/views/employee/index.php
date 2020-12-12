@@ -2,22 +2,44 @@
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Doctors</h4>
+                        <h4 class="page-title">Employees</h4>
                     </div>
                     <div class="col-sm-8 col-9 text-right m-b-20">
-                        <?php if(in_array('createDoctor', $user_permission)): ?>
-                        <a href="<?php echo base_url('doctors/add')?>" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Doctor</a>
+                        <?php if(in_array('createEmployee', $user_permission)): ?>
+                        <a href="<?php echo base_url('Employees/add')?>" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Employee</a>
                         <?php endif; ?>
                     </div>
                 </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                         <?php if($this->session->flashdata('success')): ?>
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <?php echo $this->session->flashdata('success'); ?>
+                      </div>
+                      <?php elseif($this->session->flashdata('errors')): ?>
+                        <div class="alert alert-error alert-dismissible" role="alert">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <?php echo $this->session->flashdata('errors'); ?>
+                      </div>
+                      
+                      <?php else: ?>
+                          <?php if(validation_errors()): ?>
+                            <div class="alert alert-error alert-dismissible" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <?php echo validation_errors(); ?>
+                              adsfasd
+                          </div>
+                      <?php endif; ?>
+                      <?php endif; ?>
                 <div class="box-body">
-                    <table id="doctorTable" class="table table-bordered table-striped">
+                    <table id="employeeTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Photo</th>
                                 <th>Name</th>
                                 <th>Sex</th>
-                                <th>Date of birth</th>
+                                <th>Role</th>
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Status</th>
@@ -36,7 +58,7 @@
                                         else
                                             echo 'Female'; 
                                         ?></td>
-                                        <td><?php echo $v['user_info']['dob'] ?></td>
+                                        <td><?php echo $v['user_info']['rolename'] ?></td>
                                         <td><?php echo $v['user_info']['phone'] ?></td>
                                         <td><?php echo $v['user_info']['email'] ?></td>
                                         <td><?php if($v['user_info']['active'] == 0): ?>
@@ -46,10 +68,10 @@
                                         <?php endif; ?>
                                         </td>
                                         <td>
-                                             <?php if(in_array('updateDoctor', $user_permission)): ?>
-                                            <a href="<?php echo base_url('Doctors/edit/'.$v['user_info']['empid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                             <?php if(in_array('updateEmployee', $user_permission)): ?>
+                                            <a href="<?php echo base_url('Employees/edit/'.$v['user_info']['empid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                                             <?php endif; ?>
-                                             <?php if(in_array('deleteDoctor', $user_permission)): ?>
+                                             <?php if(in_array('deleteEmployee', $user_permission)): ?>
                                             <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['user_info']['empid']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
                                             <?php endif; ?>
                                         </td>
@@ -68,21 +90,7 @@
                     </div>
                 </div>
             </div> 
-            <!-- <div id="removeModal" class="modal fade delete-modal" role="dialog">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body text-center">
-                            <img src="assets/img/sent.png" alt="" width="50" height="46">
-                            <h3>Are you sure want to delete this Doctor?</h3>
-                            <form  id="removeForm" action="<?php echo base_url('Doctors/delete/'.$v['user_info']['empid'])?>" method="post">
-                                <div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+           
             <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -98,12 +106,12 @@
               <div class="modal-footer">
                <form id="removeForm" method="post">
                 <input type="submit" class="btn btn-danger" name="confirm" value="Remove"><span>    </span>
-                <!-- <a href="doctors" class="btn btn-default">Cancel</a> -->
+                
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
             </form>
         </div>
 
-<!-- action=" <?php echo base_url('Doctors/delete/') ?>"  -->
+
 
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -112,12 +120,12 @@
     function removeFunc(id)
     {
         console.log(id);
-        document.getElementById('removeForm').action = "Doctors/delete/" + id ;
+        document.getElementById('removeForm').action = "Employees/delete/" + id ;
         console.log(document.getElementById('removeForm').action);
     }
     $(document).ready(function() {
-        $('#doctorTable').DataTable('');
-        $("#Doctors").addClass('active');
+        $('#employeeTable').DataTable('');
+        $("#Employees").addClass('active');
    }); 
 
 </script>
