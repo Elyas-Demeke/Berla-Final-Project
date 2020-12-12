@@ -30,39 +30,41 @@
           <?php endif; ?>
 
           <?php //if(in_array('createGroup', $user_permission)): ?>
-            <a href="<?php echo base_url('groups/create') ?>" class="btn btn-primary">Add Role</a>
+            <a href="<?php echo base_url('Ward/create') ?>" class="btn btn-primary">Add Ward</a>
             <br /> <br />
           <?php //endif; ?>
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Manage Roles</h3>
+              <h3 class="box-title">Manage Ward</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="groupTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Role Name</th>
-                  <?php// if(in_array('updateGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
+                  <th>Ward Name</th>
+                  <th>Phone number</th>
+                  <?php if(in_array('updateWard', $user_permission) || in_array('deleteWard', $user_permission)): ?>
                     <th>Action</th>
-                  <?php// endif; ?>
+                  <?php endif; ?>
                 </tr>
                 </thead>
                 <tbody>
-                  <?php if($role_data): ?>                  
-                    <?php foreach ($role_data as $k => $v): ?>
+                  <?php if($ward_data): ?>                  
+                    <?php foreach ($ward_data as $k => $v): ?>
                       <tr>
-                        <td><?php echo $v['role_info']['name']; ?></td>
+                        <td><?php echo $v['ward_info']['name']; ?></td>
+                        <td><?php echo $v['ward_info']['phone_num']; ?></td>
 
                         <?php //if(in_array('updateGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
                         <td>
                           <?php //if(in_array('updateGroup', $user_permission)): ?>
-                          <a href="<?php echo base_url('groups/edit/'.$v['role_info']['id']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>  
+                          <a href="<?php echo base_url('Wards/edit/'.$v['ward_info']['id']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>  
                           <?php// endif; ?>
                           <?php //if(in_array('deleteGroup', $user_permission)): ?>
                          
-                           <button type="button" class="btn btn-danger" onclick="removeFunc($v['role_info']['id'])" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
+                           <button type="button" class="btn btn-danger" onclick="removeFunc($v['ward_info']['id'])" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
 
                           <?php// endif; ?>
 
@@ -105,7 +107,7 @@
           <p>Do you really want to remove?</p>
         </div>
         <div class="modal-footer">
-         <form action=" <?php echo base_url('groups/delete/'.$v['role_info']['id']) ?>" method="post">
+         <form action=" <?php echo base_url('Wards/delete/'.$v['ward_info']['id']) ?>" method="post">
             <input type="submit" class="btn btn-danger" name="confirm" value="Remove group">
             <a href="<?php echo base_url('groups') ?>" class="btn btn-default">Cancel</a>
           </form>
@@ -122,7 +124,7 @@
     $(document).ready(function() {
       $('#groupTable').DataTable();
 
-      $("#groups").addClass('active');
+      $("#Ward").addClass('active');
     });
 
 

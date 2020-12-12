@@ -6,7 +6,8 @@ class Appointments extends Admin_Controller
 		parent::__construct();
 
 		$this->not_logged_in();
-
+		 // $this->load->model('Model_patient');
+		 $this->load->model('Model_Appointment');
 		$this->data['page_title'] = 'Appointment';
 	}
 
@@ -22,43 +23,47 @@ class Appointments extends Admin_Controller
 		// $is_admin = ($user_id == 1) ? true :false;
 
 		// $this->data['is_admin'] = $is_admin;
+		 if(!in_array('viewAppointment', $this->permission)) {
+		 	redirect('dashboard', 'refresh');
+		 }
+		 $Appointment_data = $this->Model_Appointment->get_appt_data();
+        $result = array();
+        foreach ($Appointment_data as $k => $v) {
+
+             $result[$k]['appt_info'] = $v;
+        }
+        $this->data['appt_data'] = $result;
 		$this->render_template('Appointment/index', $this->data);
 		// $this->load->view('welcome_message',$this->data);
 	}
-	public function add()
+	public function make($id = null)
 	{
-		$this->form_validation->set_rules('role', 'Role', 'required');
-		$this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[5]|max_length[12]|is_unique[users.username]');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|is_unique[users.email]');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-		$this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
-		$this->form_validation->set_rules('dob', 'DOB', 'trim|required');
-		$this->form_validation->set_rules('gender', 'Gender', 'trim|required');
-		$this->form_validation->set_rules('fname', 'First name', 'trim|required');
-		$this->form_validation->set_rules('mname', 'First name', 'trim|required');
-		$this->form_validation->set_rules('lname', 'First name', 'trim|required');
+            if(!in_array('createAppointment', $this->permission)) {
+            redirect('dashboard', 'refresh');
+            }
+		
+			$this->form_validation->set_rules('status[]', 'Appointment Status', 'trim|required');
+			$this->form_validation->set_rules('reason', 'Reason', 'trim|required');
+			$this->form_validation->set_rules('time', 'Date & Time', 'trim|required');
 
         if ($this->form_validation->run() == TRUE) {
             // true case
-            $password = $this->password_hash($this->input->post('password'));
         	$data = array(
-        		'username' => $this->input->post('username'),
-        		'password' => $password,
-        		'email' => $this->input->post('email'),
-        		'firstname' => $this->input->post('fname'),
-        		'lastname' => $this->input->post('lname'),
-        		'phone' => $this->input->post('phone'),
-        		'gender' => $this->input->post('gender'),
+        		'patient_id' => $id,
+        		'doctor_id' => $this->session->userdata('id'),
+        		'appt_date' => date("Y-m-d H:i:s", strtotime($this->input->post('time'))),
+        		'status' => $this->input->post('status[0]'),
+        		'reason'	=> $this->input->post('reason')        		
         	);
 
-        	$create = $this->model_users->create($data, $this->input->post('groups'));
+        	$create = $this->Model_Appointment->make($data);
         	if($create == true) {
         		$this->session->set_flashdata('success', 'Successfully created');
-        		redirect('users/', 'refresh');
+        		redirect('Appointments/', 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('users/create', 'refresh');
+        		redirect('Appointments/make', 'refresh');
         	}
         }
         else 
@@ -66,8 +71,77 @@ class Appointments extends Admin_Controller
             // false case
         	// $group_data = $this->model_groups->getGroupData();
         	// $this->data['group_data'] = $group_data;
-
+        	 $patient_data = $this->Model_Appointment->get_patient_data($id);
+        	 $user_id = $this->session->userdata('id');
+        	 
+	         $this->data['patient_data'] = $patient_data;
             $this->render_template('Appointment/add', $this->data);
         }
 	}
+	public function edit($id = null){
+            if(!in_array('updateAppointment', $this->permission)) {
+            redirect('dashboard', 'refresh');
+            }
+           if($id){
+
+			$this->form_validation->set_rules('status[]', 'Appointment Status', 'trim|required');
+			$this->form_validation->set_rules('reason', 'Reason', 'trim|required');
+			$this->form_validation->set_rules('time', 'Date & Time', 'trim|required');
+
+		        if ($this->form_validation->run() == TRUE) {
+		            // true case
+		        	$data = array(
+		        		'patient_id' => $id,
+		        		'doctor_id' => $this->session->userdata('id'),
+		        		'appt_date' => date("Y-m-d H:i:s", strtotime($this->input->post('time'))),
+		        		'status' => $this->input->post('status[0]'),
+		        		'reason'	=> $this->input->post('reason')        		
+		        	);
+
+		        	$update = $this->Model_Appointment->edit($id, $data);
+		        	if($update == true) {
+		        		$this->session->set_flashdata('success', 'Successfully updated');
+		        		redirect('Appointments/', 'refresh');
+		        	}
+		        	else {
+		        		$this->session->set_flashdata('errors', 'Error occurred!!');
+		        		redirect('Appointments/make', 'refresh');
+		        	}
+		        }
+	            else{
+
+	                $patient_data = $this->Model_Appointment->get_appt_data($id);
+	                $this->data['appt_data'] = $patient_data;
+	                $this->render_template('Appointment/edit',$this->data);  
+	            }
+
+
+            }
+           
+        
+            else{
+                redirect('Appointment','refresh');
+            }
+
+    }
+    public function delete($id = null)
+    {
+    	if(!in_array('deleteAppointment', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
+        if($id) {
+            if($this->input->post('confirm')) {
+                    $delete = $this->Model_Appointment->delete($id);
+                    if($delete == true) {
+                        $this->session->set_flashdata('success', 'Successfully removed');
+                        redirect('Appointments/', 'refresh');
+                    }
+                    else {
+                        $this->session->set_flashdata('error', 'Error occurred!!');
+                        redirect('Appointments/', 'refresh');
+                    }
+
+            }   
+        }
+    }
 }

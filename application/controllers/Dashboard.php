@@ -17,7 +17,6 @@ class Dashboard extends Admin_Controller
 	*/
 	public function index()
 	{
-
 		$user_id = $this->session->userdata('id');
 		$is_admin = ($user_id == 1) ? true :false;
 		$general = $this->model_auth->information();

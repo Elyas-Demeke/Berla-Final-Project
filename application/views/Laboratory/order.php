@@ -3,7 +3,7 @@
                 <div class="row"><br></div>
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                        <h4 class="page-title">Add Appointment</h4>
+                        <h4 class="page-title">Order Laboratory test</h4>
                     </div>
                 </div>
                 <div class="row">
@@ -47,30 +47,34 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Department</label>
-                                        <input class="form-control" type="text" value="<?php echo $patient_data['wardname'] ?>" readonly="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-										<label>Reason</label>
-										<input class="form-control" name="reason" type="text" >
-									</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label>Date & Time</label>
                                         <div class="time-icon">
-                                            <input type="datetime-local" name="time" class="form-control timepicker">
+                                            <input id="time" type="text" name="time" class="form-control timepicker" value="<?php 
+                                            date_default_timezone_set("Africa/Addis_Ababa");
+                                            echo date("m/d/Y h:i a");?>" readonly="">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="display-block">Appointment Status</label>
+                    										
+                                        <label for="groups" class="control-label" >Lab Test Type</label>
+                                            <select class="form-control" id="groups" name="type" required>
+                                              <option value="">Select Type</option>
+                                              <option value="Urine test">Urine test</option>
+                                              <option value="Blood tests">Blood tests</option>
+                                              <option value="Tumor markers">Tumor markers</option>
+                                            </select>
+                    										<!-- <input class="form-control" name="testname" type="text" > -->
+                  									</div>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                               
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="display-block">Lab Test Status</label>
         								<div class="form-check form-check-inline">
         									<input class="form-check-input" type="radio" name="status[]" id="product_active" value= "1" checked>
         									<label class="form-check-label" for="product_active">
@@ -85,11 +89,11 @@
         								</div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row"><br></div>
                             
                             <div class="m-t-20 text-center">
-                                <button class="btn btn-primary submit-btn">Create Appointment</button>
+                                <button class="btn btn-primary submit-btn">Order Test</button>
                             </div>
                         </form>
                     </div>
@@ -97,6 +101,7 @@
             </div>
 <script type="text/javascript">
     $(document).ready(function() {
-   $("#Appointments").addClass('active');
+    
+   $("#LaboratoryTest").addClass('active');
      }); 
     </script>  

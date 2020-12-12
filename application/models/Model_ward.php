@@ -1,6 +1,6 @@
 <?php 
 
-class Model_group extends CI_Model
+class Model_ward extends CI_Model
 {
 	public function __construct()
 	{
@@ -23,22 +23,35 @@ class Model_group extends CI_Model
 		$delete = $this->db->delete('accounts');
 		return ($delete == true) ? true : false;
 	}
-	public function get_role_data($id = null)
+	public function get_ward_data($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM role WHERE id = ?";
+			$sql = "SELECT * FROM ward WHERE id = ?";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM role";
+		$sql = "SELECT * FROM ward";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
-	public function edit( $id = null, $data = array())
+	public function edit($data = array(), $id = null, $account_data = null)
 	{
 		$this->db->where('id', $id);
-		$update = $this->db->update('role', $data);
+		$update = $this->db->update('employees', $data);
+		$sql = 'SELECT accountid FROM employees WHERE id = ?';
+		$query = $this->db->query($sql,array($id));
+		$result = $query->row_array();
+		$account_id = $result['accountid'];
+
+		if($account_id) {
+		// 	// user group
+			
+			$this->db->where('id', $account_id);
+			$doctor_account = $this->db->update('accounts', $account_data);
+			return ($update == true && $doctor_account == true) ? true : false;	
+		}
+			
 		return ($update == true) ? true : false;	
 	}
 	public function getUserRole($userId = null)

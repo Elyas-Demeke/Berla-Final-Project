@@ -1,5 +1,4 @@
 <?php 
-
 class Patients extends Admin_controller{
 	public function __construct()
 	{
@@ -10,6 +9,9 @@ class Patients extends Admin_controller{
 	}
 	public function index()
 	{
+        if(!in_array('viewPatient', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
         $Patient_data = $this->Model_patient->get_patient_data();
         $result = array();
         foreach ($Patient_data as $k => $v) {
@@ -18,7 +20,7 @@ class Patients extends Admin_controller{
              // echo "v is ".$v['username'];
             // $role = $this->Model_doctor->getUserRole($v['empid']);
             //  $result[$k]['user_role'] = $role;
-                // echo ' k is'.$k.'<br>';
+            // echo ' k is'.$k.'<br>';
         }
 
         $this->data['user_data'] = $result;
@@ -26,6 +28,9 @@ class Patients extends Admin_controller{
 	}
 	public function add()
 	{
+        if(!in_array('createPatient', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
 		$this->form_validation->set_rules('fname', 'First name', 'trim|required');
         $this->form_validation->set_rules('mname', 'First name', 'trim|required');
         $this->form_validation->set_rules('lname', 'First name', 'trim|required');
@@ -114,6 +119,9 @@ class Patients extends Admin_controller{
         }
 	}
     public function edit($id = null){
+            if(!in_array('updatePatient', $this->permission)) {
+            redirect('dashboard', 'refresh');
+            }
             if($id)
             {// if called properly from the edit button            
                 $this->form_validation->set_rules('fname', 'First name', 'trim|required');
@@ -209,6 +217,9 @@ class Patients extends Admin_controller{
     }
     public function delete($id)
     {
+        if(!in_array('deletePatient', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
         if($id) {
             if($this->input->post('confirm')) {
                     $delete = $this->Model_patient->delete($id);

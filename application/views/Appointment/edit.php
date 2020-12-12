@@ -28,18 +28,18 @@
                           </div>
                       <?php endif; ?>
                   <?php endif; ?>
-                        <form role="form" method="post" enctype="multipart/form-data" accept-charset="utf-8" action="<?php echo $patient_data['patid'] ?>">
+                        <form role="form" method="post" enctype="multipart/form-data" accept-charset="utf-8" action="<?php echo $appt_data['apptId'] ?>">
                             <div class="row">
                                 <div class="col-md-6">
-									<div class="form-group">
-										<label>Patient Name</label>
-										<input class="form-control" type="text" value="<?php echo $patient_data['fname']." ".$patient_data['mname']; ?>" readonly="">
-									</div>
+                                    <div class="form-group">
+                                        <label>Patient Name</label>
+                                        <input class="form-control" type="text" value="<?php echo $appt_data['pfname']." ".$appt_data['pmname']; ?>" readonly="">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Doctor</label>
-                                        <input class="form-control" type="text" value="<?php echo $this->session->userdata('fname')." ".$this->session->userdata('mname') ?>" readonly="">
+                                        <input class="form-control" type="text" value="<?php echo $appt_data['efname']." ".$appt_data['emname'] ?>" readonly="">
 
                                     </div>
                                 </div>
@@ -48,14 +48,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Department</label>
-                                        <input class="form-control" type="text" value="<?php echo $patient_data['wardname'] ?>" readonly="">
+                                        <input class="form-control" type="text" value="<?php echo $appt_data['name'] ?>" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-										<label>Reason</label>
-										<input class="form-control" name="reason" type="text" >
-									</div>
+                                        <label>Reason</label>
+                                        <input class="form-control" name="reason" value="<?php echo $appt_data['reason'] ?>" type="text" >
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -64,32 +64,40 @@
                                     <div class="form-group">
                                         <label>Date & Time</label>
                                         <div class="time-icon">
-                                            <input type="datetime-local" name="time" class="form-control timepicker">
+                                            <input type="datetime-local" name="time" value="<?php echo date("Y-m-d\TH:i:s", strtotime($appt_data['appt_date'])) ?>" class="form-control timepicker">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="display-block">Appointment Status</label>
-        								<div class="form-check form-check-inline">
-        									<input class="form-check-input" type="radio" name="status[]" id="product_active" value= "1" checked>
-        									<label class="form-check-label" for="product_active">
-        									Active
-        									</label>
-        								</div>
-        								<div class="form-check form-check-inline">
-        									<input class="form-check-input" type="radio" name="status[]" id="product_inactive" value="0">
-        									<label class="form-check-label" for="product_inactive">
-        									Inactive
-        									</label>
-        								</div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status[]" id="product_active" value= "1" <?php 
+                                            if( $appt_data['status'] == 1):
+                                              echo "checked";
+                                            endif;
+                                            ?>>
+                                            <label class="form-check-label" for="product_active">
+                                            Active
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status[]" id="product_inactive" value="0" <?php 
+                                            if( $appt_data['status'] == 0):
+                                              echo "checked";
+                                            endif;
+                                            ?>>
+                                            <label class="form-check-label" for="product_inactive">
+                                            Inactive
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row"><br></div>
                             
                             <div class="m-t-20 text-center">
-                                <button class="btn btn-primary submit-btn">Create Appointment</button>
+                                <button class="btn btn-primary submit-btn">Update Appointment</button>
                             </div>
                         </form>
                     </div>

@@ -11,6 +11,9 @@ class Groups extends Admin_controller
 
 	public function index()
 	{
+        if(!in_array('viewRole', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
         $role_data = $this->Model_group->get_role_data();
 		$result = array();
         foreach ($role_data as $k => $v) {
@@ -25,14 +28,11 @@ class Groups extends Admin_controller
 
         $this->render_template('groups/index',$this->data);
 	}
-    // public function do_upload()
-    // {
-    //     $config['upload_path'] = './uploads/';
-    //     $config['allowed_types'] = 'gif|jpg|png';
-    //     $config['max_size'] = '100';
-    // }
     public function delete($id)
     {
+        if(!in_array('deleteRole', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
         if($id) {
             if($this->input->post('confirm')) {
                     $delete = $this->Model_doctor->delete($id);
@@ -52,7 +52,9 @@ class Groups extends Admin_controller
         // if(!in_array('createGroup', $this->permission)) {
         //     redirect('dashboard', 'refresh');
         // }
-
+        if(!in_array('createRole', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
         $this->form_validation->set_rules('group_name', 'Group name', 'required');
 
         if ($this->form_validation->run() == TRUE) {
@@ -64,7 +66,7 @@ class Groups extends Admin_controller
                 'permission' => $permission
             );
 
-            $create = $this->model_groups->create($data);
+            $create = $this->Model_group->create($data);
             if($create == true) {
                 $this->session->set_flashdata('success', 'Successfully created');
                 redirect('groups/', 'refresh');
@@ -80,97 +82,34 @@ class Groups extends Admin_controller
         }   
 	}
     public function edit($id = null){
-            if($id)
-            {// if called properly from the edit button            
-                $this->form_validation->set_rules('fname', 'First name', 'trim|required');
-                $this->form_validation->set_rules('mname', 'First name', 'trim|required');
-                $this->form_validation->set_rules('lname', 'First name', 'trim|required');
-                $this->form_validation->set_rules('email', 'Email', 'trim|required');
-                // $this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]');
-                // $this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|matches[password]');
-                $this->form_validation->set_rules('dob', 'DOB', 'trim|required');
-                //$this->form_validation->set_rules('gender[]', 'Gender', 'trim|required');
-                $this->form_validation->set_rules('office_number', 'Office Number', 'required');
-                $this->form_validation->set_rules('ward', 'Ward', 'required');
-                $this->form_validation->set_rules('phone', 'Phone','trim|required|min_length[5]|max_length[12]');
-            if($this->form_validation->run() == TRUE){// if we are trying to run edit after editing the form
-                // if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))){
-                    $image = '';
-                if(!empty($_FILES['photo']['name'])){
+            if(!in_array('updateRole', $this->permission)) {
+            redirect('dashboard', 'refresh');
+            }
+            $this->form_validation->set_rules('group_name', 'Group name', 'required');
 
-                    $config = [
-                        'upload_path' => './uploads/',
-                        'allowed_types' => 'gif|png|jpg|jpeg'
-                    ];
-                    $this->load->library('upload',$config);
-                   // $this->form_validation->set_error_delimiters();
-                    if($this->upload->do_upload('photo'))
-                    {
-                     //$data = $this->input->post();
-                         $info = $this->upload->data();
-                         $image_path = "uploads/".$info['raw_name'].$info['file_ext'];
-                         $image = $image_path;
+            if ($this->form_validation->run() == TRUE) {
+                // true case
+                $permission = serialize($this->input->post('permission'));
+                
+                $data = array(
+                    'name' => $this->input->post('group_name'),
+                    'permission' => $permission
+                );
 
-                        $accountdata = array('active' => $this->input->post('status[0]'));
-                        $data = array(
-                        'fname' => $this->input->post('fname'),
-                        'mname' => $this->input->post('mname'),
-                        'lname' => $this->input->post('lname'),
-                        'dob' => $this->input->post('dob'),
-                        'sex' => $this->input->post('gender[0]'),
-                        'phone' => $this->input->post('phone'),
-                        'officeno' => $this->input->post('office_number'),
-                        'email' => $this->input->post('email'),
-                        'ward_id' => $this->input->post('ward'),
-                        'photo' => $image,
-                        );
-                     }
-               //unset($data['submit']);
-                     else{
-                        $this->session->set_flashdata('errors', 'file found butupload failed');            
-                    }
+                $update = $this->Model_group->edit($id,$data);
+                if($update == true) {
+                    $this->session->set_flashdata('success', 'Successfully updated');
+                    redirect('groups/', 'refresh');
                 }
-            else{
-                $this->session->set_flashdata('errors', 'no file found');
-                // no file case
-                    $accountdata = array('active' => $this->input->post('status[0]'));
-                    $data = array(
-                    'fname' => $this->input->post('fname'),
-                    'mname' => $this->input->post('mname'),
-                    'lname' => $this->input->post('lname'),
-                    'dob' => $this->input->post('dob'),
-                    'sex' => $this->input->post('gender[0]'),
-                    'phone' => $this->input->post('phone'),
-                    'officeno' => $this->input->post('office_number'),
-                    'email' => $this->input->post('email'),
-                    'ward_id' => $this->input->post('ward'),
-                    );
+                else {
+                    $this->session->set_flashdata('errors', 'Error occurred!!');
+                    redirect('groups/edit/'.$id, 'refresh');
+                }
             }
-                    
-                    $update = $this->Model_doctor->edit($data,$id,$accountdata);
-                    if($update == true) {
-                            $this->session->set_flashdata('success', 'Successfully updated');
-                            redirect('Doctors/', 'refresh');
-                        }
-                        else {
-                            $this->session->set_flashdata('errors', $update);
-                            redirect('Doctors/edit/'.$id, 'refresh');
-                        }
-
-                // }//
-            }
-            else{
-
-                $doctor_data = $this->Model_doctor->get_doctor_data($id);
-                $this->data['doctor_data'] = $doctor_data;
-                $this->render_template('Doctors/edit',$this->data);  
-            }
-
-
-            }
-            else{
-                redirect('Doctors','refresh');
-            }
-
+            else {
+                $group_data = $this->Model_group->get_role_data($id);
+                $this->data['group_data'] = $group_data;
+                $this->render_template('groups/edit', $this->data);
+            } 
     }
 }
