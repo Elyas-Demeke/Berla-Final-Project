@@ -25,7 +25,7 @@
 					<div class="dropdown-menu">
 						
 						<a class="dropdown-item" href="<?php echo base_url('Employees/profile') ?>">My Profile</a>
-						<a class="dropdown-item" href="settings.html">Settings</a>
+						
 						<a class="dropdown-item" href="<?php echo base_url('Auth/logout')?>">Logout</a>
 					</div>
                 </li>

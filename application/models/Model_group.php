@@ -14,13 +14,9 @@ class Model_group extends CI_Model
 	}
 	public function delete($id)
 	{
-		$sql = "SELECT e.accountid  from employees as e where e.id = ?";
-		$query = $this->db->query($sql, array($id));
-		$row = $query->row_array();
+		
 		$this->db->where('id', $id);
-		$delete = $this->db->delete('employees');
-		$this->db->where('id', $row['accountid']);
-		$delete = $this->db->delete('accounts');
+		$delete = $this->db->delete('role');
 		return ($delete == true) ? true : false;
 	}
 	public function get_role_data($id = null)

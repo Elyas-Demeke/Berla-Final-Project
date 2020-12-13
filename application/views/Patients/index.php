@@ -13,9 +13,9 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Sex</th>
+                                <th>Vital Signs</th>
                                 <!-- <th>Date of birth</th> -->
-                                <th>Phone</th>
+                                <th>Oral Diagnosis</th>
                                <!--  <th>Email</th> -->
                                 <th>Status</th>
                                 <th>Labratory test</th>
@@ -28,21 +28,14 @@
                                 <?php foreach ($user_data as $k => $v): ?>
                                     <tr>
                                         <td><?php echo $v['user_info']['fname'].' '.$v['user_info']['mname'].' '. $v['user_info']['lname'] ?></td>
-                                        <td><?php 
-                                        if($v['user_info']['sex'] == 1)
-                                            echo 'Male';
-                                        else
-                                            echo 'Female'; 
-                                        ?></td>
+                                        <td>
+                                            <a href="<?php echo base_url('VitalSigns/add/'.$v['user_info']['patid']) ?>" class="btn btn-default"><i class=" fa fa-plus-square-o"></i> Record</a>
+                                        </td>
                                         <!-- <td><?php// echo $v['user_info']['dob'] ?></td> -->
-                                        <td><?php echo $v['user_info']['phone'] ?></td>
-                                      <!--   <td><?php echo $v['user_info']['email'] ?></td> -->
-                                        <!-- <td><?php if($v['user_info']['in_patient'] == 0): ?>
-                                            <span>Out patient</span>
-                                            <?php elseif ($v['user_info']['in_patient'] == 1):  ?>
-                                            <span>In patient</span>
-                                        <?php endif; ?>
-                                        </td> -->
+                                        
+                                        <td>
+                                            <a href="<?php echo base_url('OralHistory/add/'.$v['user_info']['patid']) ?>" class="btn btn-default"><i class=" fa fa-address-book-o"></i> Add</a>
+                                        </td>
 										<td>
                                             <?php if($v['user_info']['active'] == 0): ?>
                                             <img class="rounded-circle" width ="40" src="<?php echo base_url('assets/img/deactivated transparent sign.png')?>">

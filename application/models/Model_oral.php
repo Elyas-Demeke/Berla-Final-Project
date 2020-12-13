@@ -1,15 +1,15 @@
 <?php 
 
-class Model_laboratory extends CI_Model
+class Model_oral extends CI_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function order($data)
+    public function submit($data)
     {
-        $order = $this->db->insert('labratorytest',$data);
+        $order = $this->db->insert('oralhistory',$data);
         return ($order == true) ? true : false;
     }
     public function delete($id)
@@ -19,40 +19,16 @@ class Model_laboratory extends CI_Model
         $delete = $this->db->delete('appointment');
         return ($delete == true) ? true : false;
     }
-    public function get_test_data($id = null)
+    public function get_history($id = null)
     {
         if($id){
-            $sql = "SELECT lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name FROM labratorytest as lt, patients as p, employees as e WHERE lt.pat_id = p.id AND lt.doctor_id = e.id AND lt.id = ?";
+            $sql = "SELECT o.id as oralId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, o.date, o.diagnosis FROM oralhistory as o, patients as p, employees as e WHERE o.patient_id = p.id AND o.doctor_id = e.id AND o.id = ?";
             $query = $this->db->query($sql,array($id));
             return $query->row_array();
         }
-        $sql = "SELECT lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name FROM labratorytest as lt, patients as p, employees as e WHERE lt.pat_id = p.id AND lt.doctor_id = e.id";
+        $sql = "SELECT o.id as oralId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, o.date, o.diagnosis FROM oralhistory as o, patients as p, employees as e WHERE o.patient_id = p.id AND o.doctor_id = e.id";
         $query = $this->db->query($sql);
         return $query->result_array();
-    } 
-    public function get_result($id = null){
-        if($id){
-            $sql = "SELECT lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name, lr.result, lr.completion_date FROM labratorytest as lt, patients as p, employees as e, labratoryresult as lr WHERE lt.pat_id = p.id AND lt.doctor_id = e.id AND lt.id = lr.lab_test_id AND lt.id = ?";
-            $query = $this->db->query($sql,array($id));
-            return $query->row_array();
-        }
-    }
-    public function submit($data = null){
-        $order = $this->db->insert('labratoryresult',$data);
-        return ($order == true) ? true : false;
-    }
-    public function checksubmit($id = null){
-        if($id){
-            $sql = "SELECT * FROM labratoryresult as lr, labratorytest as lt WHERE lt.id = lr.lab_test_id AND lr.lab_test_id = ?";
-            $check = $this->db->query($sql,array($id));
-            if($check->num_rows()  > 0)
-            {
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
     }
     public function get_patient_data($id = null)
     {

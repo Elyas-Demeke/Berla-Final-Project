@@ -73,7 +73,7 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Office Phone</label>
-                                    <input type="text" class="form-control floating" value="<?php echo $user_data['phone'] ?>">
+                                    <input type="text" class="form-control floating" value="<?php echo $user_data['officeno'] ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -1,34 +1,34 @@
 <?php 
-class Laboratories extends Admin_controller
+class OralHistory extends Admin_controller
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->not_logged_in();
         $this->load->model('Model_laboratory');
-        $this->load->model('Model_Appointment');
-		$this->data['page_title'] = 'Laboratory';
+        $this->load->model('Model_oral');
+		$this->data['page_title'] = 'Employees';
 	}
 
 	public function index()
 	{
-        if(!in_array('viewLabTest', $this->permission)) {
+        if(!in_array('viewOralHistory', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
-        $test_data = $this->Model_laboratory->get_test_data();
+        $test_data = $this->Model_oral->get_history();
 		$result = array();
         foreach ($test_data as $k => $v) {
 
-             $result[$k]['test_info'] = $v;
+             $result[$k]['oral_info'] = $v;
              // echo "v is ".$v['username'];
             // $role = $this->Model_doctor->getUserRole($v['empid']);
             //  $result[$k]['user_role'] = $role;
                 // echo ' k is'.$k.'<br>';
         }
 
-        $this->data['test_data'] = $result;
+        $this->data['oral_data'] = $result;
 
-        $this->render_template('Laboratory/index',$this->data);
+        $this->render_template('Oral/index',$this->data);
 	}
     public function delete($id)
     {
@@ -50,82 +50,45 @@ class Laboratories extends Admin_controller
             }   
         }
     }
-    public function submit($id = null)
-    {
-         if(!in_array('updateLabTest', $this->permission)) {
+	public function add($id){
+        if(!in_array('createOralHistory', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
+        if($id){
 
-        
-            $this->form_validation->set_rules('result', 'Test Result', 'trim|required');
 
-        if ($this->form_validation->run() == TRUE ) {
-            $data = array(
-                'lab_test_id' => $id,
-                'result' => $this->input->post('result'),
-                'completion_date' => date("Y-m-d H:i:s", strtotime($this->input->post('time'))),            
-            );
+            // $this->form_validation->set_rules('type', 'Lab Test Type', 'trim|required');
+            $this->form_validation->set_rules('diagnosis', 'Diagnosis', 'trim|required');
 
-            $submit = $this->Model_laboratory->submit($data);
-            if($submit == true) {
-                $this->session->set_flashdata('success', 'Successfully submitted');
-                redirect('Laboratories/', 'refresh');
+            if ($this->form_validation->run() == TRUE ) {
+                $data = array(
+                    'patient_id' => $id,
+                    'doctor_id' => $this->session->userdata('id'),
+                    'date' => date("Y-m-d", strtotime($this->input->post('time'))),
+                    'diagnosis' => $this->input->post('diagnosis'),             
+                );
+
+                $submit = $this->Model_oral->submit($data);
+                if($submit == true) {
+                    $this->session->set_flashdata('success', 'Successfully Submitted');
+                    redirect('OralHistory/', 'refresh');
+                }
+                else {
+                    $this->session->set_flashdata('errors', 'Error occurred!!');
+                    redirect('OralHistory/add/'.$id, 'refresh');
+                }
+
             }
             else {
-                $this->session->set_flashdata('errors', 'Error occurred!!');
-                redirect('Laboratories/submit/'.$id, 'refresh');
-            }
 
+                $patient_data = $this->Model_oral->get_patient_data($id);
+                $this->data['patient_data'] = $patient_data;
+                $this->render_template('Oral/add', $this->data);
+            }	
         }
-        else {
-            $checksubmit = $this->Model_laboratory->checksubmit($id);
-            if(!$checksubmit){
-
-                $test_data = $this->Model_laboratory->get_test_data($id);
-                $this->data['test_data'] = $test_data;
-                $this->render_template('Laboratory/submit', $this->data);
-            }
-            else{
-                $test_data = $this->Model_laboratory->get_result($id);
-                $this->data['test_data'] = $test_data;
-                $this->render_template('Laboratory/result', $this->data);
-            }
+        else{
+            redirect('dashboard','refresh');
         }
-    }
-	public function order($id = null){
-        if(!in_array('createLabTest', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
-
-    	
-            $this->form_validation->set_rules('type', 'Lab Test Type', 'trim|required');
-            $this->form_validation->set_rules('time', 'Date & Time', 'trim|required');
-
-        if ($this->form_validation->run() == TRUE ) {
-            $data = array(
-                'pat_id' => $id,
-                'doctor_id' => $this->session->userdata('id'),
-                'test_order_time' => date("Y-m-d H:i:s", strtotime($this->input->post('time'))),
-                'test_name' => $this->input->post('type'),             
-            );
-
-            $order = $this->Model_laboratory->order($data);
-            if($order == true) {
-                $this->session->set_flashdata('success', 'Successfully ordered');
-                redirect('Appointments/', 'refresh');
-            }
-            else {
-                $this->session->set_flashdata('errors', 'Error occurred!!');
-                redirect('Appointments/make', 'refresh');
-            }
-
-        }
-        else {
-
-            $patient_data = $this->Model_Appointment->get_patient_data($id);
-            $this->data['patient_data'] = $patient_data;
-            $this->render_template('Laboratory/order', $this->data);
-        }	
 	}
     public function edit($id = null){
         if(!in_array('updateEmployee', $this->permission)) {

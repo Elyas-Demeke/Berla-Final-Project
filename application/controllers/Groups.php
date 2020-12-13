@@ -35,14 +35,14 @@ class Groups extends Admin_controller
         }
         if($id) {
             if($this->input->post('confirm')) {
-                    $delete = $this->Model_doctor->delete($id);
+                    $delete = $this->Model_group->delete($id);
                     if($delete == true) {
                         $this->session->set_flashdata('success', 'Successfully removed');
-                        redirect('Doctors/', 'refresh');
+                        redirect('Groups/', 'refresh');
                     }
                     else {
                         $this->session->set_flashdata('error', 'Error occurred!!');
-                        redirect('Doctors/', 'refresh');
+                        redirect('Groups/', 'refresh');
                     }
 
             }   
