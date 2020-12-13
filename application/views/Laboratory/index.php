@@ -51,7 +51,7 @@
 	                                        <td class="text-center"><?php echo $v['test_info']['test_order_time'] ?></td>
 	                                        <td class="text-center"><?php echo $v['test_info']['test_name'] ?></td>
 	                                        <td class="text-center">
-	                                        	
+	                                        	<a href="<?php echo base_url('Laboratories/submit/'.$v['test_info']['testId']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i>result</a>
 	                                        </td>
 											
 	                                        <td class="text-center">

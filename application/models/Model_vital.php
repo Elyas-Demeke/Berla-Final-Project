@@ -1,15 +1,15 @@
 <?php 
 
-class Model_medical extends CI_Model
+class Model_vital extends CI_Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function order($data)
+    public function submit($data)
     {
-        $order = $this->db->insert('labratorytest',$data);
+        $order = $this->db->insert('vital_sign',$data);
         return ($order == true) ? true : false;
     }
     public function delete($id)
@@ -19,14 +19,14 @@ class Model_medical extends CI_Model
         $delete = $this->db->delete('appointment');
         return ($delete == true) ? true : false;
     }
-    public function get_history($id = null)
+    public function get_record($id = null)
     {
         if($id){
-            $sql = "SELECT lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name FROM labratorytest as lt, patients as p, employees as e WHERE lt.pat_id = p.id AND lt.doctor_id = e.id AND lt.id = ?";
+            $sql = "SELECT v.id as vitalId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, v.date, v.temp, v.bp, v.pulse FROM vital_sign as v, patients as p, employees as e WHERE v.pat_id = p.id AND v.emp_id = e.id AND v.id = ?";
             $query = $this->db->query($sql,array($id));
             return $query->row_array();
         }
-        $sql = "SELECT lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name FROM labratorytest as lt, patients as p, employees as e WHERE lt.pat_id = p.id AND lt.doctor_id = e.id";
+        $sql = "SELECT v.id as vitalId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, v.date, v.temp, v.bp, v.pulse FROM vital_sign as v, patients as p, employees as e WHERE v.pat_id = p.id AND v.emp_id = e.id";
         $query = $this->db->query($sql);
         return $query->result_array();
     }

@@ -222,6 +222,7 @@
                           if(in_array('deleteVitalSigns', $serialize_permission)) { echo "checked"; } 
                         } ?> ></td>
                       </tr>
+                      <tr>
                         <td>Profile</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createProfile" class="minimal" <?php if($serialize_permission) {
                           if(in_array('createVitalSigns', $serialize_permission)) { echo "checked"; } 

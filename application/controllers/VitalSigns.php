@@ -1,34 +1,34 @@
 <?php 
-class MedicalHistory extends Admin_controller
+class VitalSigns extends Admin_controller
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->not_logged_in();
         $this->load->model('Model_laboratory');
-        $this->load->model('Model_medical');
+        $this->load->model('Model_vital');
 		$this->data['page_title'] = 'Employees';
 	}
 
 	public function index()
 	{
-        if(!in_array('viewEmployee', $this->permission)) {
+        if(!in_array('viewVitalSigns', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
-        $test_data = $this->Model_medical->get_history();
+        $test_data = $this->Model_vital->get_record();
 		$result = array();
         foreach ($test_data as $k => $v) {
 
-             $result[$k]['test_info'] = $v;
+             $result[$k]['vital_info'] = $v;
              // echo "v is ".$v['username'];
             // $role = $this->Model_doctor->getUserRole($v['empid']);
             //  $result[$k]['user_role'] = $role;
                 // echo ' k is'.$k.'<br>';
         }
 
-        $this->data['test_data'] = $result;
+        $this->data['vital_data'] = $result;
 
-        $this->render_template('Laboratory/index',$this->data);
+        $this->render_template('vital/index',$this->data);
 	}
     public function delete($id)
     {
@@ -50,40 +50,49 @@ class MedicalHistory extends Admin_controller
             }   
         }
     }
-	public function order($id = null){
-        if(!in_array('createLabTest', $this->permission)) {
+	public function add($id){
+        if(!in_array('createVitalSigns', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
+        if($id){
 
-    	
-            $this->form_validation->set_rules('type', 'Lab Test Type', 'trim|required');
-            $this->form_validation->set_rules('time', 'Date & Time', 'trim|required');
 
-        if ($this->form_validation->run() == TRUE ) {
-            $data = array(
-                'pat_id' => $id,
-                'doctor_id' => $this->session->userdata('id'),
-                'test_order_time' => date("Y-m-d H:i:s", strtotime($this->input->post('time'))),
-                'test_name' => $this->input->post('type'),             
-            );
+            // $this->form_validation->set_rules('type', 'Lab Test Type', 'trim|required');
+            $this->form_validation->set_rules('temp', 'Temprature', 'trim|required');
+            $this->form_validation->set_rules('bp', 'Blood Pressure', 'trim|required');
+            $this->form_validation->set_rules('pulse', 'Pulse', 'trim|required');
 
-            $order = $this->Model_laboratory->order($data);
-            if($order == true) {
-                $this->session->set_flashdata('success', 'Successfully ordered');
-                redirect('Appointments/', 'refresh');
+            if ($this->form_validation->run() == TRUE ) {
+                $data = array(
+                    'pat_id' => $id,
+                    'emp_id' => $this->session->userdata('id'),
+                    'date' => date("Y-m-d", strtotime($this->input->post('time'))),
+                    'temp' => $this->input->post('temp'),             
+                    'bp' => $this->input->post('bp'),             
+                    'pulse' => $this->input->post('pulse'),             
+                );
+
+                $submit = $this->Model_vital->submit($data);
+                if($submit == true) {
+                    $this->session->set_flashdata('success', 'Successfully Submitted');
+                    redirect('VitalSigns/', 'refresh');
+                }
+                else {
+                    $this->session->set_flashdata('errors', 'Error occurred!!');
+                    redirect('VitalSigns/add/'.$id, 'refresh');
+                }
+
             }
             else {
-                $this->session->set_flashdata('errors', 'Error occurred!!');
-                redirect('Appointments/make', 'refresh');
-            }
 
+                $patient_data = $this->Model_vital->get_patient_data($id);
+                $this->data['patient_data'] = $patient_data;
+                $this->render_template('Vital/add', $this->data);
+            }	
         }
-        else {
-
-            $patient_data = $this->Model_Appointment->get_patient_data($id);
-            $this->data['patient_data'] = $patient_data;
-            $this->render_template('Laboratory/order', $this->data);
-        }	
+        else{
+            redirect('dashboard','refresh');
+        }
 	}
     public function edit($id = null){
         if(!in_array('updateEmployee', $this->permission)) {

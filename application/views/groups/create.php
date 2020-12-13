@@ -1,4 +1,3 @@
-
 <style> 
 	.form-group.required .control-label:after{
 		content: " * ";
@@ -134,6 +133,13 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewVitalSigns" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteVitalSigns" class="minimal"></td>
                       </tr>
+                      <tr>
+                        <td>Profile</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createProfile" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateProfile" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewProfile" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteProfile" class="minimal"></td>
+                      </tr>                      
                     </tbody>
                   </table>
                   

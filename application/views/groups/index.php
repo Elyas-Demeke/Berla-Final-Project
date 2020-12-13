@@ -62,7 +62,7 @@
                           <?php// endif; ?>
                           <?php //if(in_array('deleteGroup', $user_permission)): ?>
                          
-                           <button type="button" class="btn btn-danger" onclick="removeFunc($v['role_info']['id'])" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
+                           <button type="button" class="btn btn-danger" onclick="removeFunc('<?php  echo $v['role_info']['id']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
 
                           <?php// endif; ?>
 
@@ -90,32 +90,34 @@
   <!-- /.content-wrapper -->
 
 
-  <?php //if(in_array('deleteGroup', $user_permission)): ?>
+  <?php if(in_array('deleteRole', $user_permission)): ?>
 <!-- remove brand modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Remove Group </h4>
-      </div>
+            <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Remove User </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
 
-     
-        <div class="modal-body">
-          <p>Do you really want to remove?</p>
+
+                <div class="modal-body">
+                  <p>Do you really want to remove?</p>
+              </div>
+              <div class="modal-footer">
+               <form id="removeForm" method="post">
+                <input type="submit" class="btn btn-danger" name="confirm" value="Remove"><span>    </span>
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+            </form>
         </div>
-        <div class="modal-footer">
-         <form action=" <?php echo base_url('groups/delete/'.$v['role_info']['id']) ?>" method="post">
-            <input type="submit" class="btn btn-danger" name="confirm" value="Remove group">
-            <a href="<?php echo base_url('groups') ?>" class="btn btn-default">Cancel</a>
-          </form>
-        </div>
-  
+
 
 
     </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal-dialog -->
+</div>
+<?php endif; ?>
 <?php endif; ?>
 
   <script type="text/javascript">
@@ -124,49 +126,13 @@
 
       $("#groups").addClass('active');
     });
-
+     function removeFunc(id)
+    {
+        console.log(id);
+        document.getElementById('removeForm').action = "delete/" + id ;
+        console.log(document.getElementById('removeForm').action);
+    }
 
        // remove functions 
-function removeFunc(id)
-{
-  if(id) {
-    $("#removeForm").on('submit', function() {
 
-      var form = $(this);
-
-      // remove the text-danger
-      $(".text-danger").remove();
-
-      $.ajax({
-        url: form.attr('action'),
-        type: form.attr('method'),
-        data: { group_id:id }, 
-        dataType: 'json',
-        success:function(response) {
-
-          userTable.ajax.reload(null, false); 
-
-          if(response.success === true) {
-            $("#messages").html('<div class="alert alert-success alert-dismissible" role="alert">'+
-              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-              '<strong> <span class="glyphicon glyphicon-ok-sign"></span> </strong>'+response.messages+" comes from index "+
-            '</div>');
-
-            // hide the modal
-            $("#removeModal").modal('hide');
-
-          } else {
-
-            $("#messages").html('<div class="alert alert-warning alert-dismissible" role="alert">'+
-              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-              '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong> comes from index '+response.messages+
-            '</div>'); 
-          }
-        }
-      }); 
-
-      return false;
-    });
-  }
-}
   </script>

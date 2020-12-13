@@ -49,6 +49,9 @@ class Model_auth extends CI_Model
 		$sql = 'SELECT * FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND a.roleId = 2';
 		$query = $this->db->query($sql);
 		$info += array('doctors' => $query->num_rows());
+		$sql = 'SELECT * FROM employees as e, accounts as a, ward as w WHERE e.ward_id = w.id AND e.accountid = a.id AND a.roleId != 3';
+		$query = $this->db->query($sql);
+		$info += array('employees' => $query->num_rows());
 		return $info;
 	}
 	public function login($phone, $password) {

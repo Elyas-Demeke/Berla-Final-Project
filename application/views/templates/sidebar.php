@@ -22,9 +22,9 @@
                             <a href="<?php echo base_url('Laboratories')?>"><i class="fa fa-thermometer-full"></i> <span>Laboratory Tests</span></a>
                         </li>
                         <?php endif; ?>
-                        <?php if(in_array('createAppointment', $user_permission) || in_array('updateAppointment', $user_permission) || in_array('viewAppointment', $user_permission) || in_array('deleteAppointment', $user_permission) ): ?>
-                        <li id="MedicalHistory">
-                            <a href="<?php echo base_url('MedicalHistory')?>"><i class="fa fa-history"></i> <span>Medical History</span></a>
+                        <?php if(in_array('createOralHistory', $user_permission) || in_array('updateOralHistory', $user_permission) || in_array('viewOralHistory', $user_permission) || in_array('deleteOralHistory', $user_permission) ): ?>
+                        <li id="OralHistory">
+                            <a href="<?php echo base_url('OralHistory')?>"><i class="fa fa-history"></i> <span>Oral History</span></a>
                         </li>
                         <?php endif; ?>
                         <?php if(in_array('createAppointment', $user_permission) || in_array('updateAppointment', $user_permission) || in_array('viewAppointment', $user_permission) || in_array('deleteAppointment', $user_permission) ): ?>
@@ -32,9 +32,9 @@
                             <a href="<?php echo base_url('Appointments')?>"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                         </li>
                         <?php endif; ?>
-                        <?php if(in_array('createAppointment', $user_permission) || in_array('updateAppointment', $user_permission) || in_array('viewAppointment', $user_permission) || in_array('deleteAppointment', $user_permission) ): ?>
-                        <li id="Appointments">
-                            <a href="<?php echo base_url('Vitals')?>"><i class="fa fa-stethoscope"></i> <span>Vital Signs</span></a>
+                        <?php if(in_array('createVitalSigns', $user_permission) || in_array('updateVitalSigns', $user_permission) || in_array('viewVitalSigns', $user_permission) || in_array('deleteVitalSigns', $user_permission) ): ?>
+                        <li id="VitalSigns">
+                            <a href="<?php echo base_url('VitalSigns')?>"><i class="fa fa-stethoscope"></i> <span>Vital Signs</span></a>
                         </li>
                         <?php endif; ?>
                         <?php if(in_array('createWard', $user_permission) || in_array('updateWard', $user_permission) || in_array('viewWard', $user_permission) || in_array('deleteWard', $user_permission) ): ?>
