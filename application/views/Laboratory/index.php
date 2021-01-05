@@ -38,7 +38,9 @@
 											<th class="text-center">order Date & Time</th>
 											<th class="text-center">Test type</th>
 											<th class="text-center">Result</th>
+											<?php if(in_array('updateLabTest', $user_permission) || in_array('deleteLabTest', $user_permission)): ?>
 											<th class="text-center">Action</th>
+										<?php endif; ?>
 										</tr>
 									</thead>
 									<tbody>
@@ -51,14 +53,25 @@
 	                                        <td class="text-center"><?php echo $v['test_info']['test_order_time'] ?></td>
 	                                        <td class="text-center"><?php echo $v['test_info']['test_name'] ?></td>
 	                                        <td class="text-center">
-	                                        	<a href="<?php echo base_url('Laboratories/submit/'.$v['test_info']['testId']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i>result</a>
+	                                           
+	                                           	<?php if($v['test_info']['submitted'] && in_array('viewLabResult', $user_permission)): ?>
+	                                        	<a href="<?php echo base_url('Laboratories/submit/'.$v['test_info']['testId']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i>View</a>
+	                                        	<?php elseif(in_array('createLabResult', $user_permission)): ?>
+	                                        	<a href="<?php echo base_url('Laboratories/submit/'.$v['test_info']['testId']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i>Submit</a>
+		                                        <?php endif; ?>
 	                                        </td>
-											
+											<?php if(in_array('updateLabTest', $user_permission) || in_array('deleteLabTest', $user_permission)): ?>
 	                                        <td class="text-center">
-	                                            
+	                                           <?php if(in_array('updateLabTest', $user_permission) ): ?>
+	                                           	<?php if($v['test_info']['submitted']): ?>
 	                                            <a href="<?php echo base_url('Laboratories/edit/'.$v['test_info']['testId']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+		                                        <?php endif; ?>
+	                                        <?php endif; ?>
+	                                        <?php if(in_array('deleteLabTest', $user_permission) ): ?>
 	                                            <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['test_info']['testId']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
 	                                        </td>
+		                                    <?php endif; ?>
+	                                    <?php endif; ?>
 	                                    </tr>
 	                                    
 	                                <?php endforeach; ?>

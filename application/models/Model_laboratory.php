@@ -32,7 +32,7 @@ class Model_laboratory extends CI_Model
     } 
     public function get_result($id = null){
         if($id){
-            $sql = "SELECT lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name, lr.result, lr.completion_date FROM labratorytest as lt, patients as p, employees as e, labratoryresult as lr WHERE lt.pat_id = p.id AND lt.doctor_id = e.id AND lt.id = lr.lab_test_id AND lt.id = ?";
+            $sql = "SELECT lr.id as resultId, lt.id as testId, p.fname as pfname, p.mname as pmname, p.lname as plname, e.fname as efname, e.mname as emname, e.lname as elname, lt.test_order_time, lt.test_name, lr.result, lr.completion_date FROM labratorytest as lt, patients as p, employees as e, labratoryresult as lr WHERE lt.pat_id = p.id AND lt.doctor_id = e.id AND lt.id = lr.lab_test_id AND lt.id = ?";
             $query = $this->db->query($sql,array($id));
             return $query->row_array();
         }
@@ -68,8 +68,8 @@ class Model_laboratory extends CI_Model
     }
     public function edit($id = null, $data = null)
     {
-        $this->db->where('id', $id);
-        $update = $this->db->update('appointment',$data);
+        $this->db->where('lab_test_id', $id);
+        $update = $this->db->update('labratoryresult',$data);
         return ($update == true) ? true : false;
         
     }
