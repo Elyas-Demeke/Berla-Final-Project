@@ -5,7 +5,7 @@
                         <h4 class="page-title">Edit Profile</h4>
                     </div>
                 </div>
-                <form>
+                <form  role="form" method="post" enctype="multipart/form-data" accept-charset="utf-8" action="<?php echo base_url('Employees/setting/')?>">
                     <div class="card-box">
                         <h3 class="card-title">Basic Informations</h3>
                         <div class="row">
@@ -14,7 +14,7 @@
                                     <img class="inline-block" src="<?php echo base_url().$user_data['photo'] ?>" alt="user">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
-                                        <input class="upload" type="file">
+                                        <input class="upload" name="photo" type="file">
                                     </div>
                                 </div>
                                 <div class="profile-basic">
@@ -67,19 +67,19 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Phone</label>
-                                    <input type="text" class="form-control floating" value="<?php echo $user_data['phone'] ?>">
+                                    <input type="text" name="phone" class="form-control floating" value="<?php echo $user_data['phone'] ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Office Phone</label>
-                                    <input type="text" class="form-control floating" value="<?php echo $user_data['officeno'] ?>">
+                                    <input type="text" name="office_number" class="form-control floating" value="<?php echo $user_data['officeno'] ?>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Email</label>
-                                    <input type="text" class="form-control floating" value="<?php echo $user_data['email'] ?>">
+                                    <input type="text" name="email" class="form-control floating" value="<?php echo $user_data['email'] ?>">
                                 </div>
                             </div>                            
                         </div>
@@ -96,13 +96,13 @@
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Password</label>
-                                    <input type="text" class="form-control floating">
+                                    <input type="password" name="password" class="form-control floating">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group form-focus">
                                     <label class="focus-label">Confirm Password</label>
-                                    <input type="text" class="form-control floating">
+                                    <input type="password" name='cpassword' class="form-control floating">
                                 </div>
                             </div>                            
                         </div>
