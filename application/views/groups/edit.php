@@ -31,7 +31,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Add Role</h3>
+              <h3 class="box-title">Edit Role</h3>
             </div>
             <form role="form" action="<?php base_url('groups/create') ?>" method="post">
               <div class="box-body">

@@ -42,46 +42,45 @@
                             </div>
                             <div class="row">
                                 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Laboratory Test Name</label>
                                         <input class="form-control" name="test_name" value="<?php echo $test_data['test_name'] ?>" type="text" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Test order time</label>
+                                        <label>test order time</label>
                                         <div class="time-icon">
                                             <input type="datetime-local" name="time" value="<?php echo date("Y-m-d\TH:i:s", strtotime($test_data['test_order_time'])) ?>" class="form-control timepicker" readonly>
                                         </div>
                                     </div>
                             </div>
-                            <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Test result time</label>
-                                        <div class="time-icon">
-                                            <input id="time" type="text" name="resulttime" class="form-control timepicker" value="<?php 
-                                            date_default_timezone_set("Africa/Addis_Ababa");
-                                            echo date("m/d/Y h:i a");?>" readonly="">
-                                        </div>
-                                    </div>
-                                </div>
                             <div class="row">
                                 
                                 </div>
                                 <div class="col-md-12">
+                                    
                                     <div class="form-group">
                                         <label>Test Result</label>
-                                        <!-- <input class="form-control" name="result" type="textarea" > -->
-                                        <textarea class="form-control" name="result"></textarea>
+                                        <input class="form-control" name="result" type="textarea" value="<?php echo $test_data['result'] ?>" >
+                                        <!-- <textarea class="form-control" name="result" value="<?php echo $test_data['result'] ?>" readonly=""></textarea> -->
                                     </div>
-                                    
+                                      
                                 </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Test result submission time</label>
+                                            <div class="time-icon">
+                                                <input type="datetime-local" name="time" value="<?php echo date("Y-m-d\TH:i:s", strtotime($test_data['completion_date'])) ?>" class="form-control timepicker" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="row"><br></div>
                             
                             <div class="m-t-20 text-center">
-                                <button class="btn btn-primary submit-btn">Submit Result</button>
+                                <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
                                 <a href="<?php echo base_url('Laboratories')?>" class="btn btn-danger submit-btn">Back</a>
                             </div>
                         </form>

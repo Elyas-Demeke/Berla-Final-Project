@@ -270,7 +270,7 @@ class Employees extends Admin_controller
         $id = $this->session->userdata('id');
 
         if($id) {
-           $this->form_validation->set_rules('fname', 'First name', 'trim|required');
+               $this->form_validation->set_rules('fname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('mname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('lname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('email', 'Email', 'trim|required');
@@ -279,7 +279,6 @@ class Employees extends Admin_controller
                 $this->form_validation->set_rules('dob', 'Birth Date', 'trim|required');
                 //$this->form_validation->set_rules('gender[]', 'Gender', 'trim|required');
                 $this->form_validation->set_rules('office_number', 'Office Number', 'required');
-                $this->form_validation->set_rules('ward', 'Ward', 'required');
                 $this->form_validation->set_rules('phone', 'Phone','trim|required|min_length[5]|max_length[12]');
 
 
@@ -312,8 +311,7 @@ class Employees extends Admin_controller
                         'sex' => $this->input->post('gender[0]'),
                         'phone' => $this->input->post('phone'),
                         'officeno' => $this->input->post('office_number'),
-                        'email' => $this->input->post('email'),
-                        'ward_id' => $this->input->post('ward'),
+                        'email' => $this->input->post('email'),                        
                         'photo' => $image,
                         );
                      }
@@ -341,6 +339,7 @@ class Employees extends Admin_controller
                     'ward_id' => $this->input->post('ward'),
                     );
             }
+            if(!empty($this->input->post('password')))
                     
                     $update = $this->Model_employee->edit($data,$id,$accountdata);
                     if($update == true) {

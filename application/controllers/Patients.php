@@ -44,43 +44,7 @@ class Patients extends Admin_controller{
         $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[5]|max_length[12]|is_unique[accounts.phone]');
 
         if ($this->form_validation->run() == TRUE ) {
-                $image = '';
-        //     if(!empty($_FILES['photo']['name'])){
-
-        //         $config = [
-        //             'upload_path' => './uploads/',
-        //             'allowed_types' => 'gif|png|jpg|jpeg'
-        //         ];
-        //         $this->load->library('upload',$config);
-        //        // $this->form_validation->set_error_delimiters();
-        //         if($this->upload->do_upload('photo'))
-        //         {
-        //          //$data = $this->input->post();
-        //          $info = $this->upload->data();
-        //          $image_path = "uploads/".$info['raw_name'].$info['file_ext'];
-        //          $image = $image_path;
-
-        //      }
-        //    //unset($data['submit']);
-        //      else
-        //      {
-        //         $this->session->set_flashdata('errors', 'file found butupload failed');            
-        //     }
-        // }
-        // else{
-        //     $this->session->set_flashdata('errors', 'no file found');
-        //     // no file case
-        // }
-
-        //$this->session->set_flashdata('errors', 'form run');  
-
-                // $this->load->model('queries');
-            // if($this->model_auth->insertImage($data)){
-            //     echo 'Image uploded succesfully';
-            // }
-            // else{
-            //     echo 'Failed';
-            // }
+            $image = '';
             $password = password_hash($this->input->post('password'),PASSWORD_DEFAULT);
             $account = array(
                 'phone' => $this->input->post('phone'),
@@ -112,9 +76,6 @@ class Patients extends Admin_controller{
             }
         }
         else {
-            // false case
-            // $group_data = $this->model_groups->getGroupData();
-            // $this->data['group_data'] = $group_data;
             $this->render_template('Patients/add', $this->data);
         }
 	}
@@ -128,16 +89,13 @@ class Patients extends Admin_controller{
                 $this->form_validation->set_rules('mname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('lname', 'First name', 'trim|required');
                 $this->form_validation->set_rules('email', 'Email', 'trim|required|is_unique[employees.email]');
-                // $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
-                // $this->form_validation->set_rules('cpassword', 'Confirm password', 'trim|required|matches[password]');
                 $this->form_validation->set_rules('dob', 'DOB', 'trim|required');
                 $this->form_validation->set_rules('gender[]', 'Gender', 'trim|required');
                 $this->form_validation->set_rules('home_number', 'Home Number', 'required');
                 $this->form_validation->set_rules('ward', 'Ward', 'required');
                 $this->form_validation->set_rules('phone', 'Phone', 'trim|required|min_length[5]|max_length[12]');
-            if($this->form_validation->run() == TRUE){// if we are trying to run edit after editing the form
-                // if(empty($this->input->post('password')) && empty($this->input->post('cpassword'))){
-                    $image = '';
+            if($this->form_validation->run() == TRUE){
+                $image = '';
                 if(!empty($_FILES['photo']['name'])){
 
                     $config = [

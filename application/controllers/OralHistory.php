@@ -170,11 +170,11 @@ class OralHistory extends Admin_controller
                     $update = $this->Model_employee->edit($data,$id,$accountdata);
                     if($update == true) {
                             $this->session->set_flashdata('success', 'Successfully updated');
-                            redirect('Employees/', 'refresh');
+                            redirect('OralHistory/', 'refresh');
                         }
                         else {
                             $this->session->set_flashdata('errors', $update);
-                            redirect('Employees/edit/'.$id, 'refresh');
+                            redirect('OralHistory/edit/'.$id, 'refresh');
                         }
 
                 // }//

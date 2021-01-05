@@ -4,9 +4,11 @@
                     <div class="col-sm-4 col-3">
                         <h4 class="page-title">Patients</h4>
                     </div>
+                    <?php if(in_array('createPatient', $user_permission)): ?>
                     <div class="col-sm-8 col-9 text-right m-b-20">
                         <a href="<?php echo base_url('Patients/add')?>" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Patient</a>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <div class="box-body">
                     <table id="patientTable" class="table table-bordered table-striped">
@@ -20,7 +22,9 @@
                                 <th>Status</th>
                                 <th>Labratory test</th>
                                 <th>Appointment</th>
+                                <?php if(in_array('update', $user_permission) || in_array('deletePatient', $user_permission)): ?>
                                 <th>Action</th>
+                            <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>    
@@ -49,11 +53,17 @@
                                         <td>
                                             <a href="<?php echo base_url('Appointments/make/'.$v['user_info']['patid']) ?>" class="btn btn-default"><i class="fa fa-calendar-times-o"></i> Make</a>
                                         </td>
+                                        <?php if(in_array('updatePatient', $user_permission) || in_array('deletePatient', $user_permission)): ?>
                                         <td>
-                                            
+                                            <?php if(in_array('updatePatient', $user_permission)): ?>
                                             <a href="<?php echo base_url('Patients/edit/'.$v['user_info']['patid']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                            <?php endif; ?>
+                                            <?php if(in_array('deletePatient', $user_permission)): ?>
+
                                             <button type="button" class="btn btn-danger" onclick=" removeFunc('<?php echo $v['user_info']['patid']?>')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>
+                                        <?php endif; ?>
                                         </td>
+                                    <?php endif; ?>
                                     </tr>
                                     
                                 <?php endforeach; ?>
